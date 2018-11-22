@@ -23,7 +23,7 @@ namespace TP2
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/WeatherPage");
+            await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
