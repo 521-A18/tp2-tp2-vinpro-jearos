@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -11,19 +12,37 @@ using static TP2.Models.WeatherCondition;
 
 namespace TP2.ViewModels
 {
-    public class WeatherPageViewModel : BindableBase
+    public class WeatherPageViewModel : ViewModelBase
     {
         private string _url = "http://api.apixu.com/v1/";
         private string _key = "current.json?key=2536facad072420089773603181210";
-        private string _region = "&q=quebec";
+        private string _region;
         private string _language = "&lang=fr";
         private string _weatherConditionString;
         private RootObject _weatherCondition;
         private HttpClient _client = new HttpClient();
 
-        public WeatherPageViewModel()
+        public WeatherPageViewModel(INavigationService navigationService)
+            :base(navigationService)
         {
+        }
+
+        public override async void OnNavigatingTo(INavigationParameters param)
+        {
+            var region = param.GetValue<string>("region");
+            Region = region;
             GetResponse();
+        }
+
+        public string Region
+        {
+            get => _region;
+
+            set
+            {
+                _region = value;
+                RaisePropertyChanged();
+            }
         }
 
         public RootObject WeatherCondition
@@ -40,7 +59,8 @@ namespace TP2.ViewModels
         public async void GetResponse()
         {
             Run();
-            _weatherConditionString = await GetLocationAsync(_region, _language);
+            string region = "&q=" + _region + "";
+            _weatherConditionString = await GetLocationAsync(region, _language);
             SetWeatherCondition();
            
         }
@@ -70,5 +90,7 @@ namespace TP2.ViewModels
             var weatherConditionObject = JsonConvert.DeserializeObject<RootObject>(_weatherConditionString);
             WeatherCondition = weatherConditionObject;
         }
+
+        
     }
 }
