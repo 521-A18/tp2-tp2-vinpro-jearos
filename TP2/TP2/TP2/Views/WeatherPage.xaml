@@ -6,6 +6,6 @@
              x:Class="TP2.Views.WeatherPage">
 
     <StackLayout>
-        <Label Text="{Binding WeatherCondition.Location.name}" />
+        <Label Text="{Binding WeatherCondition.location.name}" />
     </StackLayout>
 </ContentPage>

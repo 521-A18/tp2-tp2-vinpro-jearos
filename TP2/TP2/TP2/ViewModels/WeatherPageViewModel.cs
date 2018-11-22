@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using TP2.Models;
+using static TP2.Models.WeatherCondition;
 
 namespace TP2.ViewModels
 {
@@ -15,7 +18,7 @@ namespace TP2.ViewModels
         private string _region = "&q=quebec";
         private string _language = "&lang=fr";
         private string _weatherConditionString;
-        private WeatherCondition _weatherCondition;
+        private RootObject _weatherCondition;
         private HttpClient _client = new HttpClient();
 
         public WeatherPageViewModel()
@@ -23,7 +26,7 @@ namespace TP2.ViewModels
             GetResponse();
         }
 
-        public WeatherCondition WeatherCondition
+        public RootObject WeatherCondition
         {
             get => _weatherCondition;
 
@@ -36,13 +39,13 @@ namespace TP2.ViewModels
 
         public async void GetResponse()
         {
-            await RunAsync();
+            Run();
             _weatherConditionString = await GetLocationAsync(_region, _language);
             SetWeatherCondition();
            
         }
 
-        private async Task RunAsync()
+        private void Run()
         {
             // Update port # in the following line.
             _client.BaseAddress = new Uri(_url);
@@ -64,8 +67,8 @@ namespace TP2.ViewModels
 
         private void SetWeatherCondition()
         {
-            WeatherCondition = JsonConvert.DeserializeObject<WeatherCondition>(_weatherConditionString);
-            
+            var weatherConditionObject = JsonConvert.DeserializeObject<RootObject>(_weatherConditionString);
+            WeatherCondition = weatherConditionObject;
         }
     }
 }
