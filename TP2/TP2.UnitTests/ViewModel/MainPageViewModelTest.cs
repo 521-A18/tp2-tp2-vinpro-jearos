@@ -35,21 +35,6 @@ namespace TP2.UnitTests.ViewModel
             Assert.True(_eventRaised);
         }
 
-        //[Fact]
-        //public void SetRegion_WhenErrorHappen_ShouldThrowException()
-        //{
-        //    var navigationParameter = new NavigationParameters
-        //        {
-        //            { "region", "quebec" }
-        //        };
-        //    _mockNavigationService.Setup(x => x.NavigateAsync("WeatherPage", navigationParameter)).Throws(new Exception());
-
-        //    _mainPageViewModel.SearchRegion.Execute();
-
-        //    _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.ALERT_ERROR, UiText.OK), Times.AtLeastOnce());
-
-        //}
-
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)
         {
             _eventRaised = true;
