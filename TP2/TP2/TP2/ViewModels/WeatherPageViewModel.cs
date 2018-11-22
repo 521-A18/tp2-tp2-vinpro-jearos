@@ -32,6 +32,7 @@ namespace TP2.ViewModels
             var region = param.GetValue<string>("region");
             Region = region;
             GetResponse();
+            var icon = WeatherCondition.current.cloud;
         }
 
         public string Region

@@ -6,6 +6,9 @@
              x:Class="TP2.Views.WeatherPage">
 
     <StackLayout>
+        <Image Source="{Binding WeatherCondition.current.condition.icon}" />
         <Label Text="{Binding WeatherCondition.location.name}" />
+        <Label Text="{Binding WeatherCondition.current.temp_c}" />
+        <Label Text="{Binding WeatherCondition.current.feelslike_c}" />
     </StackLayout>
 </ContentPage>
