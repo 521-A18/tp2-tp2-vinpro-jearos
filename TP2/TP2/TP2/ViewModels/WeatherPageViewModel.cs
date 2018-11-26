@@ -2,11 +2,13 @@
 using Newtonsoft.Json.Linq;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using TP2.Externalization;
 using TP2.Models;
 using static TP2.Models.WeatherCondition;
 
@@ -22,17 +24,21 @@ namespace TP2.ViewModels
         private RootObject _weatherCondition;
         private HttpClient _client = new HttpClient();
 
-        public WeatherPageViewModel(INavigationService navigationService)
+        private IPageDialogService _pageDialogService;
+        private INavigationService _navigationService;
+
+        public WeatherPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
             :base(navigationService)
         {
+            _pageDialogService = pageDialogService;
+            _navigationService = navigationService;
         }
 
-        public override async void OnNavigatingTo(INavigationParameters param)
+        public override void OnNavigatingTo(INavigationParameters param)
         {
             var region = param.GetValue<string>("region");
             Region = region;
             GetResponse();
-            var icon = WeatherCondition.current.cloud;
         }
 
         public string Region
@@ -86,10 +92,20 @@ namespace TP2.ViewModels
             return weatherCondition;
         }
 
-        private void SetWeatherCondition()
+        private async void SetWeatherCondition()
         {
-            var weatherConditionObject = JsonConvert.DeserializeObject<RootObject>(_weatherConditionString);
-            WeatherCondition = weatherConditionObject;
+            try
+            {
+                var weatherConditionObject = JsonConvert.DeserializeObject<RootObject>(_weatherConditionString);
+                WeatherCondition = weatherConditionObject;
+                WeatherCondition.current.condition.icon = "http:" + WeatherCondition.current.condition.icon;
+            }
+            catch
+            {
+                await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.WRONG_REGION, UiText.OK);
+                await _navigationService.GoBackAsync();
+            }
+            
         }
 
         
