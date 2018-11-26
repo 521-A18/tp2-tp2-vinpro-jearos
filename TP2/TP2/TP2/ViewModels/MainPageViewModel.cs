@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TP2.Externalization;
+using TP2.Views;
 
 namespace TP2.ViewModels
 {
@@ -40,11 +41,15 @@ namespace TP2.ViewModels
         {
             try
             {
-                var navigationParameter = new NavigationParameters
+                if (Region == null || Region == "") { await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.WRONG_REGION, UiText.OK); }
+                else
                 {
-                    { "region", Region }
-                };
-                await _navigationService.NavigateAsync("WeatherPage", navigationParameter);
+                    var navigationParameter = new NavigationParameters
+                    {
+                        { "region", Region }
+                    };
+                    await _navigationService.NavigateAsync(nameof(WeatherPage), navigationParameter);
+                }
             }
             catch
             {
