@@ -10,28 +10,28 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using TP2.Externalization;
 using TP2.Models;
+using TP2.Services;
+using TP2.Services.Interfaces;
 using static TP2.Models.WeatherCondition;
 
 namespace TP2.ViewModels
 {
     public class WeatherPageViewModel : ViewModelBase
     {
-        private string _url = "http://api.apixu.com/v1/";
-        private string _key = "current.json?key=2536facad072420089773603181210";
         private string _region;
-        private string _language = "&lang=fr";
-        private string _weatherConditionString;
+
         private RootObject _weatherCondition;
-        private HttpClient _client = new HttpClient();
 
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
+        private IApiService _apiService;
 
-        public WeatherPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
+        public WeatherPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IApiService apiService)
             :base(navigationService)
         {
             _pageDialogService = pageDialogService;
             _navigationService = navigationService;
+            _apiService = apiService;
         }
 
         public override void OnNavigatingTo(INavigationParameters param)
@@ -63,40 +63,17 @@ namespace TP2.ViewModels
             }
         }
 
-        public async void GetResponse()
+        public void GetResponse()
         {
-            Run();
             string region = "&q=" + _region + "";
-            _weatherConditionString = await GetLocationAsync(region, _language);
-            SetWeatherCondition();
-           
+            SetWeatherCondition(region);
         }
 
-        private void Run()
-        {
-            // Update port # in the following line.
-            _client.BaseAddress = new Uri(_url);
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        private async Task<string> GetLocationAsync(string region, string language)
-        {
-            string weatherCondition = null;
-            HttpResponseMessage response = await _client.GetAsync(_key + region + language);
-            if (response.IsSuccessStatusCode)
-            {
-                weatherCondition = await response.Content.ReadAsStringAsync();
-            }
-            return weatherCondition;
-        }
-
-        private async void SetWeatherCondition()
+        private async void SetWeatherCondition(string region)
         {
             try
             {
-                var weatherConditionObject = JsonConvert.DeserializeObject<RootObject>(_weatherConditionString);
+                var weatherConditionObject = await _apiService.GetLocationAsync(region);
                 WeatherCondition = weatherConditionObject;
                 WeatherCondition.current.condition.icon = "http:" + WeatherCondition.current.condition.icon;
             }

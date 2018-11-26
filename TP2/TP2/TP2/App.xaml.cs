@@ -1,5 +1,8 @@
-﻿using Prism;
+﻿using System.Net.Http;
+using Prism;
 using Prism.Ioc;
+using TP2.Services;
+using TP2.Services.Interfaces;
 using TP2.ViewModels;
 using TP2.Views;
 using Xamarin.Forms;
@@ -31,6 +34,9 @@ namespace TP2
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<WeatherPage, WeatherPageViewModel>();
+
+            containerRegistry.RegisterSingleton<IHttpClient, HttpClientService>();
+            containerRegistry.RegisterSingleton<IApiService, ApiService>();
         }
     }
 }
