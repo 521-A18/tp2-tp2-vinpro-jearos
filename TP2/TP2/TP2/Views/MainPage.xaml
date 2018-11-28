@@ -7,6 +7,7 @@
         <Label Text="Région" />
         <Entry Placeholder="Quebec" Text="{Binding Region}"/>
         <Button Command="{Binding SearchRegion}" Text="Rechercher" />
+        <Button Command="{Binding CreateAccount}" Text="Créer un compte" />
     </StackLayout>
 
 </ContentPage>
