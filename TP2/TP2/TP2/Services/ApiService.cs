@@ -1,6 +1,4 @@
-﻿
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TP2.Services.Interfaces;
 using static TP2.Models.WeatherCondition;

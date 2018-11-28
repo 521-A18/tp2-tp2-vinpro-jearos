@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TP2.Externalization
+﻿namespace TP2.Externalization
 {
     public class UiText
     {
