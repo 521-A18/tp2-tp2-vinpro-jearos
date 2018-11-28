@@ -34,9 +34,11 @@ namespace TP2
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<WeatherPage, WeatherPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
 
             containerRegistry.RegisterSingleton<IHttpClient, HttpClientService>();
             containerRegistry.RegisterSingleton<IApiService, ApiService>();
+            
         }
     }
 }
