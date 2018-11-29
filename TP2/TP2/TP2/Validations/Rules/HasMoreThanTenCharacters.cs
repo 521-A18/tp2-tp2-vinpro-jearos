@@ -10,9 +10,7 @@ namespace TP2.Validations.Rules
         {
             if (value == null) return false;
 
-            string valueInString = value.ToString();
-
-            if (valueInString.Length < 10) return false;
+            if (value.ToString().Length < 10) return false;
 
             return true;
         }

@@ -11,9 +11,7 @@ namespace TP2.Validations.Rules
         {
             if (value == null) return false;
 
-            string valueInString = value.ToString();
-
-            return valueInString.Any(char.IsDigit);
+            return value.ToString().Any(char.IsDigit);
         }
     }
 }

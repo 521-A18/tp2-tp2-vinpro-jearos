@@ -16,16 +16,14 @@ namespace TP2.Validations.Rules
                 return false;
             }
 
-            string valueInString = value.ToString();
-
-            if (!GetValidationRegex(validationRegex).IsMatch(valueInString))
+            if (!GetValidationRegex(validationRegex).IsMatch(value.ToString()))
             {
                 return false;
             }
 
-            var str = value as string;
+            //var str = value as string;
 
-            return !string.IsNullOrWhiteSpace(str);
+            return !string.IsNullOrWhiteSpace(value.ToString());
         }
 
         public Regex GetValidationRegex(string newRegex)
