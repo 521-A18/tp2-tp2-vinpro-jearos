@@ -1,4 +1,5 @@
-﻿using TP2.Validations.Interface;
+﻿using System.Linq;
+using TP2.Validations.Interface;
 
 namespace TP2.Validations.Rules
 {
@@ -8,7 +9,9 @@ namespace TP2.Validations.Rules
 
         public bool Check(T value)
         {
-            throw new System.NotImplementedException();
+            if (value == null) return false;
+
+            return value.ToString().Any(char.IsUpper);
         }
     }
 }
