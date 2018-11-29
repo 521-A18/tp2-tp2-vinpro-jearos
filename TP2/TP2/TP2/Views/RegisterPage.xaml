@@ -2,10 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:converters="clr-namespace:TP2.Converters;assembly=TP2"
+             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TP2.Views.RegisterPage">
 
+
     <StackLayout>
-        <Label Text="Courriel :" />
+        <Entry Text="{Binding UserName.Value}">
+            <Entry.Behaviors>
+                <behaviors:EventToCommandBehavior
+                    EventName="TextChanged"
+                    Command="{Binding ValidateCommandUserName}" />
+            </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry" Binding="{Binding UserName.IsValid}"  Value="False">
+                    <Setter Property="BackgroundColor" Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+        <Label Text="{Binding UserName.Errors,
+                              Converter={converters:FirstValidationErrorToTextConverter}}" />
+        <Entry Text="{Binding UserPassword.Value}">
+            <Entry.Behaviors>
+                <behaviors:EventToCommandBehavior
+                    EventName="TextChanged"
+                    Command="{Binding ValidateCommandUserPassword}" />
+            </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry" Binding="{Binding UserPassword.IsValid}"  Value="False">
+                    <Setter Property="BackgroundColor" Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+        <Label Text="{Binding UserPassword.Errors,
+                              Converter={converters:FirstValidationErrorToTextConverter}}"/>
+        <Button Text="S'inscrire" Command="{Binding ValidateCommand}" />
     </StackLayout>
 </ContentPage>
