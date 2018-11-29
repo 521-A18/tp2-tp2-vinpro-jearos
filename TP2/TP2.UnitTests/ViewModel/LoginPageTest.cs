@@ -7,6 +7,7 @@ using Xunit;
 using TP2.Services.Interfaces;
 using Prism.Navigation;
 using TP2.Externalization;
+using TP2.Views;
 
 namespace TP2.UnitTests.ViewModel
 {
@@ -49,7 +50,7 @@ namespace TP2.UnitTests.ViewModel
             _authServiceMock.Setup(auth => auth.IsUserAuthenticated).Returns(true);
             _loginPageViewModel.AuthenticateCommand.Execute();
 
-            _navigationService.Verify(x => x.NavigateAsync("/" + nameof(Views.FavoriteRegionPage)), Times.Once);
+            _navigationService.Verify(x => x.NavigateAsync(nameof(FavoriteRegionPage)), Times.Once);
         }
 
         [Fact]
