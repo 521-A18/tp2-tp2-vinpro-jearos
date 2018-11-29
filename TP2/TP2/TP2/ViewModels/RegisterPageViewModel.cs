@@ -1,6 +1,8 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
 using TP2.Validations;
+using Prism.Commands;
+using System;
 
 namespace TP2.ViewModels
 {
@@ -11,6 +13,10 @@ namespace TP2.ViewModels
         private ValidatableObject<string> _email;
         private ValidatableObject<string> _password;
         private ValidatableObject<string> _passwordConfirm;
+
+        public DelegateCommand ExecuteUserPage = new DelegateCommand(UserPageNavigation);
+
+        
 
         public RegisterPageViewModel(INavigationService navigationService)
             :base(navigationService)
@@ -46,6 +52,11 @@ namespace TP2.ViewModels
                 _passwordConfirm = value;
                 RaisePropertyChanged();
             }
+        }
+
+        private static void UserPageNavigation()
+        {
+            throw new NotImplementedException();
         }
     }
 }

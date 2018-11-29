@@ -6,5 +6,10 @@
         public const string ALERT = "Alert";
         public const string OK = "Ok";
         public const string WRONG_REGION = "La région que vous avez entré n'existe pas.";
+        public const string EMAIL_IS_INCORRECT = "Le email que vous utilisez n'est pas valide.";
+        public const string PASSWORD_NEED_CAP_LETTER = "Le mot de passe doit contenir au moins une lettre majuscule.";
+        public const string PASSWORD_NEED_TEN_CHARACTER = "Le mot de passe doit contenir au moins 10 caractères.";
+        public const string PASSWORD_NEED_LOWERCASE_LETTER = "Le mot de passe doit contenir au moins une lettre minuscule.";
+        public const string PASSWORD_NEED_ONE_NUMBER = "Le mot de passe doit contenir au moins un chiffre.";
     }
 }
