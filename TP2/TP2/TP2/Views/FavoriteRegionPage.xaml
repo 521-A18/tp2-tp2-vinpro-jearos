@@ -6,5 +6,6 @@
              x:Class="TP2.Views.FavoriteRegionPage">
     <StackLayout>
         <Label Text="Page des favories"/>
+        <Button Text="Deconnexion" Command="{Binding LogoutCommand}"></Button>
     </StackLayout>
 </ContentPage>

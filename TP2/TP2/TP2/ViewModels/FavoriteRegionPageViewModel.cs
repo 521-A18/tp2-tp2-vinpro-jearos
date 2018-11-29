@@ -4,6 +4,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TP2.Views;
 
 namespace TP2.ViewModels
 {
@@ -15,5 +16,12 @@ namespace TP2.ViewModels
         {
             _navigationService = navigationService;
         }
-	}
+
+        public DelegateCommand LogoutCommand => new DelegateCommand(Logout);
+
+        private async void Logout()
+        {
+            await _navigationService.GoBackToRootAsync();
+        }
+    }
 }
