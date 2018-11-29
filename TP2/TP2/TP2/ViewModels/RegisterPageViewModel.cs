@@ -17,6 +17,9 @@ namespace TP2.ViewModels
         private ValidatableObject<string> _passwordConfirm;
 
         public DelegateCommand ExecuteUserPage => new DelegateCommand(UserPageNavigation);
+        public DelegateCommand ExecuteValidateEmail => new DelegateCommand(ValidateEmail);
+        public DelegateCommand ExecuteValidatePassword => new DelegateCommand(ValidatePassword);
+        public DelegateCommand ExecuteValidatePasswordConfirm => new DelegateCommand(ValidatePasswordConfirm);
 
         public RegisterPageViewModel(INavigationService navigationService)
             :base(navigationService)
