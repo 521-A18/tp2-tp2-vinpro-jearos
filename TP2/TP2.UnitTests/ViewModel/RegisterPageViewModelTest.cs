@@ -5,6 +5,9 @@ using Moq;
 using Prism.Navigation;
 using Prism.Services;
 using TP2.Externalization;
+using TP2.Models.Entities;
+using TP2.Services;
+using TP2.Services.Interfaces;
 using TP2.UnitTests.Constante;
 using TP2.Validations;
 using TP2.ViewModels;
@@ -18,13 +21,21 @@ namespace TP2.UnitTests.ViewModel
         private readonly RegisterPageViewModel _registerPageViewModels;
         private Mock<INavigationService> _mockNavigationService;
         private Mock<IPageDialogService> _mockPageDialogService;
+        private Mock<IRepository<User>> _mockRepository;
+        private ICryptoService _cryptoService;
+        private Mock<ISecureStorageService> _mockSecureStorageService;
+
         private bool _eventRaised = false;
 
         public RegisterPageViewModelTest()
         {
             _mockNavigationService = new Mock<INavigationService>();
             _mockPageDialogService = new Mock<IPageDialogService>();
-            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object);
+            _cryptoService = new CryptoService();
+            _mockRepository = new Mock<IRepository<User>>();
+            _mockSecureStorageService = new Mock<ISecureStorageService>();
+
+            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object, _cryptoService, _mockRepository.Object, _mockSecureStorageService.Object);
         }
 
         [Fact]
@@ -142,7 +153,7 @@ namespace TP2.UnitTests.ViewModel
         {
             _registerPageViewModels.Email.Value = ConstanteTest.BAD_EMAIL;
             _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
-            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_EMAIL;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD;
 
             _registerPageViewModels.ExecuteUserPage.Execute();
 
@@ -184,7 +195,7 @@ namespace TP2.UnitTests.ViewModel
 
             _registerPageViewModels.ExecuteUserPage.Execute();
 
-            _mockNavigationService.Verify(x => x.NavigateAsync(It.IsAny<string>()), Times.AtLeastOnce());
+            _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.ALERT_ERROR, UiText.OK), Times.AtLeastOnce());
         }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)

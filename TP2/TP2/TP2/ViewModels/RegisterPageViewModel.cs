@@ -1,12 +1,13 @@
-﻿using Prism.Mvvm;
-using Prism.Navigation;
+﻿using Prism.Navigation;
 using TP2.Validations;
 using Prism.Commands;
-using System;
 using TP2.Validations.Rules;
 using TP2.Externalization;
 using Prism.Services;
 using TP2.Views;
+using TP2.Models.Entities;
+using TP2.Services.Interfaces;
+using System.Linq;
 
 namespace TP2.ViewModels
 {
@@ -14,6 +15,9 @@ namespace TP2.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
+        private readonly IRepository<User> _repository;
+        private readonly ICryptoService _cryptoService;
+        private readonly ISecureStorageService _secureStorageService; 
 
         private ValidatableObject<string> _email;
         private ValidatableObject<string> _password;
@@ -24,15 +28,20 @@ namespace TP2.ViewModels
         public DelegateCommand ExecuteValidatePassword => new DelegateCommand(ValidatePassword);
         public DelegateCommand ExecuteValidatePasswordConfirm => new DelegateCommand(ValidatePasswordConfirm);
 
-        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
+        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ICryptoService cryptoService, IRepository<User> repository, ISecureStorageService secureStorageService)
             :base(navigationService)
         {
             _email = new ValidatableObject<string>();
             _password = new ValidatableObject<string>();
             _passwordConfirm = new ValidatableObject<string>();
+
             AddValidations();
+
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
+            _cryptoService = cryptoService;
+            _repository = repository;
+            _secureStorageService = secureStorageService;
         }
 
         public ValidatableObject<string> Email
@@ -109,8 +118,19 @@ namespace TP2.ViewModels
                 _email.Validate();
                 _password.Validate();
                 _passwordConfirm.Validate();
-                if (Password.Value.ToString() != PasswordConfirm.Value.ToString()) _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.PASSWORD_AND_CONFIRM_ARE_DIFFERENT, UiText.OK);
-                if (Email.IsValid && Password.IsValid && PasswordConfirm.IsValid) _navigationService.NavigateAsync("/" + nameof(MainPage));
+                if (Password.Value != PasswordConfirm.Value) _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.PASSWORD_AND_CONFIRM_ARE_DIFFERENT, UiText.OK);
+                else if (Email.IsValid && Password.IsValid && PasswordConfirm.IsValid)
+                {
+                    User newUser = new User();
+                    newUser.Login = Email.Value;
+                    string salt = _cryptoService.GenerateSalt();
+                    newUser.PasswordSalt = salt;
+                    newUser.HashedPassword = _cryptoService.HashSHA512(Password.Value, salt);
+                    _repository.Add(newUser);
+                    _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == Email.Value).Id.ToString(), _cryptoService.GenerateEncryptionKey());
+
+                    _navigationService.NavigateAsync("/" + nameof(MainPage));
+                }
                 else _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.ELEMENT_ARE_INVALIDE, UiText.OK);
             }
             catch
