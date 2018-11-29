@@ -9,34 +9,11 @@
 
 
     <StackLayout>
-        <Entry Text="{Binding UserName.Value}">
-            <Entry.Behaviors>
-                <behaviors:EventToCommandBehavior
-                    EventName="TextChanged"
-                    Command="{Binding ValidateCommandUserName}" />
-            </Entry.Behaviors>
-            <Entry.Triggers>
-                <DataTrigger TargetType="Entry" Binding="{Binding UserName.IsValid}"  Value="False">
-                    <Setter Property="BackgroundColor" Value="Red" />
-                </DataTrigger>
-            </Entry.Triggers>
-        </Entry>
-        <Label Text="{Binding UserName.Errors,
-                              Converter={converters:FirstValidationErrorToTextConverter}}" />
-        <Entry Text="{Binding UserPassword.Value}">
-            <Entry.Behaviors>
-                <behaviors:EventToCommandBehavior
-                    EventName="TextChanged"
-                    Command="{Binding ValidateCommandUserPassword}" />
-            </Entry.Behaviors>
-            <Entry.Triggers>
-                <DataTrigger TargetType="Entry" Binding="{Binding UserPassword.IsValid}"  Value="False">
-                    <Setter Property="BackgroundColor" Value="Red" />
-                </DataTrigger>
-            </Entry.Triggers>
-        </Entry>
-        <Label Text="{Binding UserPassword.Errors,
-                              Converter={converters:FirstValidationErrorToTextConverter}}"/>
-        <Button Text="S'inscrire" Command="{Binding ValidateCommand}" />
+        <Label Text="Courriel :" />
+        <Entry x:Name="EmailEntry" Placeholder="exemple@gmail.com" Text="{Binding Email.Value}" />
+        <Label Text="Mot de passe :" />
+        <Entry x:Name="PasswordEntry" IsPassword="True" Text="{Binding Password.Value}" />
+        <Label Text="Confirmer le mot de passe :" />
+        <Entry x:Name="PasswordConfirmEntry" IsPassword="True" Text="{Binding PasswordConfirm.Value}" />
     </StackLayout>
 </ContentPage>
