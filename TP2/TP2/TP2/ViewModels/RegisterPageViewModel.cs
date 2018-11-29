@@ -3,6 +3,8 @@ using Prism.Navigation;
 using TP2.Validations;
 using Prism.Commands;
 using System;
+using TP2.Validations.Rules;
+using TP2.Externalization;
 
 namespace TP2.ViewModels
 {
@@ -52,6 +54,43 @@ namespace TP2.ViewModels
                 _passwordConfirm = value;
                 RaisePropertyChanged();
             }
+        }
+
+        private void AddValidations()
+        {
+            var IsValidEmail = new IsValidEmail<string>
+            {
+                ErrorMessage = UiText.EMAIL_IS_INCORRECT
+            };
+            _email.AddValidationRule(IsValidEmail);
+
+            var HasAtleastOneCapCharacter = new HasAtleastOneCapCharacter<string>
+            {
+                ErrorMessage = UiText.PASSWORD_NEED_CAP_LETTER
+            };
+            _password.AddValidationRule(HasAtleastOneCapCharacter);
+            _passwordConfirm.AddValidationRule(HasAtleastOneCapCharacter);
+
+            var HasMoreThanTenCharacters = new HasMoreThanTenCharacters<string>
+            {
+                ErrorMessage = UiText.PASSWORD_NEED_TEN_CHARACTER
+            };
+            _password.AddValidationRule(HasMoreThanTenCharacters);
+            _passwordConfirm.AddValidationRule(HasMoreThanTenCharacters);
+
+            var HasAtleastOneLowercaseCharacter = new HasAtleastOneLowercaseCharacter<string>
+            {
+                ErrorMessage = UiText.PASSWORD_NEED_LOWERCASE_LETTER
+            };
+            _password.AddValidationRule(HasAtleastOneLowercaseCharacter);
+            _passwordConfirm.AddValidationRule(HasAtleastOneLowercaseCharacter);
+
+            var HasAtleastOneNumber = new HasAtleastOneNumber<string>
+            {
+                ErrorMessage = UiText.PASSWORD_NEED_ONE_NUMBER
+            };
+            _password.AddValidationRule(HasAtleastOneNumber);
+            _passwordConfirm.AddValidationRule(HasAtleastOneNumber);
         }
 
         private static void UserPageNavigation()
