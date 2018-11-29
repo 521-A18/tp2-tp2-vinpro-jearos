@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TP2.Validations.Interface;
+﻿using TP2.Validations.Interface;
 
 namespace TP2.Validations.Rules
 {
