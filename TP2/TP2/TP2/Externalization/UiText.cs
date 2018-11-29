@@ -11,6 +11,6 @@
         public const string PASSWORD_NEED_TEN_CHARACTER = "Le mot de passe doit contenir au moins 10 caractères.";
         public const string PASSWORD_NEED_LOWERCASE_LETTER = "Le mot de passe doit contenir au moins une lettre minuscule.";
         public const string PASSWORD_NEED_ONE_NUMBER = "Le mot de passe doit contenir au moins un chiffre.";
-        //public const string PASSWORD_AND_CONFIRM_ARE_DIFFERENT = "La confirmation du mot de passe n'est pas valide.";
+        public const string PASSWORD_AND_CONFIRM_ARE_DIFFERENT = "La confirmation du mot de passe n'est pas valide.";
     }
 }
