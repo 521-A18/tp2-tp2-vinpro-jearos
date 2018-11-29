@@ -15,6 +15,7 @@ namespace TP2.ViewModels
 
         public DelegateCommand SearchRegion => new DelegateCommand(Search);
         public DelegateCommand CreateAccount => new DelegateCommand(RegisterPage);
+        public DelegateCommand LoginAccount => new DelegateCommand(LoginPage);
 
         public MainPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
             : base(navigationService)
@@ -56,6 +57,11 @@ namespace TP2.ViewModels
         private async void RegisterPage()
         {
             await _navigationService.NavigateAsync(nameof(RegisterPage));
+        }
+
+        private async void LoginPage()
+        {
+            await _navigationService.NavigateAsync(nameof(LoginPage));
         }
     }
 }
