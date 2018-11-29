@@ -6,6 +6,7 @@ using System;
 using TP2.Validations.Rules;
 using TP2.Externalization;
 using Prism.Services;
+using TP2.Views;
 
 namespace TP2.ViewModels
 {
@@ -31,6 +32,7 @@ namespace TP2.ViewModels
             _passwordConfirm = new ValidatableObject<string>();
             AddValidations();
             _navigationService = navigationService;
+            _pageDialogService = pageDialogService;
         }
 
         public ValidatableObject<string> Email
@@ -102,9 +104,19 @@ namespace TP2.ViewModels
 
         public void UserPageNavigation()
         {
-            _email.Validate();
-            _password.Validate();
-            _passwordConfirm.Validate();
+            try
+            {
+                _email.Validate();
+                _password.Validate();
+                _passwordConfirm.Validate();
+                if (Password.Value.ToString() != PasswordConfirm.Value.ToString()) _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.PASSWORD_AND_CONFIRM_ARE_DIFFERENT, UiText.OK);
+                if (Email.IsValid && Password.IsValid && PasswordConfirm.IsValid) _navigationService.NavigateAsync("/" + nameof(MainPage));
+                else _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.ELEMENT_ARE_INVALIDE, UiText.OK);
+            }
+            catch
+            {
+                _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.ALERT_ERROR, UiText.OK);
+            }
             
         }
 

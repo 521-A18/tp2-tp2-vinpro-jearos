@@ -7,44 +7,53 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TP2.Views.RegisterPage">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorToTextConverter x:Key="ErrorToTextConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout>
+            <Label Text="Courriel :" />
+            <Entry x:Name="EmailEntry" Placeholder="exemple@gmail.com" Text="{Binding Email.Value}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidateEmail}" />
+                </Entry.Behaviors>
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry" Binding="{Binding Email.IsValid}" Value="False">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Label Text="{Binding Email.Errors, Converter={converters:FirstValidationErrorToTextConverter}}" />
 
-    <StackLayout>
-        <Label Text="Courriel :" />
-        <Entry x:Name="EmailEntry" Placeholder="exemple@gmail.com" Text="{Binding Email.Value}">
-            <Entry.Behaviors>
-                <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidateEmail}" />
-            </Entry.Behaviors>
-            <Entry.Triggers>
-                <DataTrigger TargetType="Entry" Binding="{Binding Email.IsValid}" Value="False">
-                    <Setter Property="BackgroundColor" Value="Red" />
-                </DataTrigger>
-            </Entry.Triggers>
-        </Entry>
+            <Label Text="Mot de passe :" />
+            <Entry x:Name="PasswordEntry" IsPassword="True" Text="{Binding Password.Value}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidatePassword}" />
+                </Entry.Behaviors>
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry" Binding="{Binding Password.IsValid}" Value="False">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Label Text="{Binding Password.Errors, Converter={converters:FirstValidationErrorToTextConverter}}" />
 
-        <Label Text="Mot de passe :" />
-        <Entry x:Name="PasswordEntry" IsPassword="True" Text="{Binding Password.Value}">
-            <Entry.Behaviors>
-                <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidatePassword}" />
-            </Entry.Behaviors>
-            <Entry.Triggers>
-                <DataTrigger TargetType="Entry" Binding="{Binding Password.IsValid}" Value="False">
-                    <Setter Property="BackgroundColor" Value="Red" />
-                </DataTrigger>
-            </Entry.Triggers>
-        </Entry>
-        
-        <Label Text="Confirmer le mot de passe :" />
-        <Entry x:Name="PasswordConfirmEntry" IsPassword="True" Text="{Binding PasswordConfirm.Value}">
-            <Entry.Behaviors>
-                <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidatePasswordConfirm}" />
-            </Entry.Behaviors>
-            <Entry.Triggers>
-                <DataTrigger TargetType="Entry" Binding="{Binding PasswordConfirm.IsValid}" Value="False">
-                    <Setter Property="BackgroundColor" Value="Red" />
-                </DataTrigger>
-            </Entry.Triggers>
-        </Entry>
-        
-        <Button Text="S'inscrire" Command="ExecuteUserPage" />
-    </StackLayout>
+            <Label Text="Confirmer le mot de passe :" />
+            <Entry x:Name="PasswordConfirmEntry" IsPassword="True" Text="{Binding PasswordConfirm.Value}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidatePasswordConfirm}" />
+                </Entry.Behaviors>
+                <Entry.Triggers>
+                    <DataTrigger TargetType="Entry" Binding="{Binding PasswordConfirm.IsValid}" Value="False">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Label Text="{Binding PasswordConfirm.Errors, Converter={converters:FirstValidationErrorToTextConverter}}" />
+
+            <Button Text="S'inscrire" Command="{Binding ExecuteUserPage}" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
