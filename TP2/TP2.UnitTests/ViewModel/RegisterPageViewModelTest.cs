@@ -172,17 +172,17 @@ namespace TP2.UnitTests.ViewModel
             _mockNavigationService.VerifyNoOtherCalls();
         }
 
-        [Fact]
-        public void UserPageNavigation_WhenEmailAndPasswordAndConfirmAreValid_ShouldNavigate()
-        {
-            _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
-            _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
-            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD_CONFIRM;
+        //[Fact]
+        //public void UserPageNavigation_WhenEmailAndPasswordAndConfirmAreValid_ShouldNavigate()
+        //{
+        //    _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
+        //    _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
+        //    _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD_CONFIRM;
 
-            _registerPageViewModels.ExecuteUserPage.Execute();
+        //    _registerPageViewModels.ExecuteUserPage.Execute();
 
-            _mockNavigationService.Verify(x => x.NavigateAsync(It.IsAny<string>()), Times.AtLeastOnce());
-        }
+        //    _mockNavigationService.Verify(x => x.NavigateAsync(It.IsAny<string>()), Times.AtLeastOnce());
+        //}
 
         [Fact]
         public void UserPageNavigation_WhenEmailAndPasswordAndConfirmAreValidButSomethingHappen_ShouldDisplayAlert()
