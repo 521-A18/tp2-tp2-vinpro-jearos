@@ -23,6 +23,10 @@ namespace TP2.ViewModels
         public RegisterPageViewModel(INavigationService navigationService)
             :base(navigationService)
         {
+            _email = new ValidatableObject<string>();
+            _password = new ValidatableObject<string>();
+            _passwordConfirm = new ValidatableObject<string>();
+            AddValidations();
             _navigationService = navigationService;
         }
 
@@ -96,6 +100,21 @@ namespace TP2.ViewModels
         private static void UserPageNavigation()
         {
             throw new NotImplementedException();
+        }
+
+        private void ValidateEmail()
+        {
+            _email.Validate();
+        }
+
+        private void ValidatePassword()
+        {
+            _password.Validate();
+        }
+
+        private void ValidatePasswordConfirm()
+        {
+            _passwordConfirm.Validate();
         }
     }
 }
