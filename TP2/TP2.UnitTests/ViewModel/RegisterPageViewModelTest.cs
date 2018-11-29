@@ -2,6 +2,7 @@
 using System.Linq;
 using Moq;
 using Prism.Navigation;
+using Prism.Services;
 using TP2.Externalization;
 using TP2.UnitTests.Constante;
 using TP2.Validations;
@@ -14,12 +15,14 @@ namespace TP2.UnitTests.ViewModel
     {
         private readonly RegisterPageViewModel _registerPageViewModels;
         private Mock<INavigationService> _mockNavigationService;
+        private Mock<IPageDialogService> _mockPageDialogService;
         private bool _eventRaised = false;
 
         public RegisterPageViewModelTest()
         {
             _mockNavigationService = new Mock<INavigationService>();
-            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object);
+            _mockPageDialogService = new Mock<IPageDialogService>();
+            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object);
         }
 
         [Fact]
@@ -106,6 +109,66 @@ namespace TP2.UnitTests.ViewModel
 
             var firstErrorMessage = _registerPageViewModels.Password.Errors.ElementAt(0);
             Assert.Equal(UiText.PASSWORD_NEED_ONE_NUMBER, firstErrorMessage);
+        }
+
+        [Fact]
+        public void UserPageNavigation_WhenEmailIsInvalidAndPasswordAndConfirmAreValid_ShouldNotNavigate()
+        {
+            _registerPageViewModels.Email.Value = ConstanteTest.BAD_EMAIL;
+            _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD_CONFIRM;
+
+            _registerPageViewModels.ExecuteUserPage.Execute();
+
+            _mockNavigationService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void UserPageNavigation_WhenEmailAndPasswordAreValidAndConfirmIsInvalid_ShouldNotNavigate()
+        {
+            _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
+            _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.BAD_PASSWORD_CONFIRM;
+
+            _registerPageViewModels.ExecuteUserPage.Execute();
+
+            _mockNavigationService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void UserPageNavigation_WhenEmailAndPasswordAreValidAndConfirmIsInvalid_ShouldDisplayAlert()
+        {
+            _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
+            _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.BAD_PASSWORD_CONFIRM;
+
+            _registerPageViewModels.ExecuteUserPage.Execute();
+
+            _mockPageDialogService.Verify(x => x.DisplayAlertAsync)
+        }
+
+        [Fact]
+        public void UserPageNavigation_WhenEmailIsValidAndPasswordIsInvalid_ShouldNotNavigate()
+        {
+            _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
+            _registerPageViewModels.Password.Value = ConstanteTest.BAD_PASSWORD;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.BAD_PASSWORD;
+
+            _registerPageViewModels.ExecuteUserPage.Execute();
+
+            _mockNavigationService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void UserPageNavigation_WhenEmailAndPasswordAndConfirmAreValid_ShouldNavigate()
+        {
+            _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
+            _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD_CONFIRM;
+
+            _registerPageViewModels.ExecuteUserPage.Execute();
+
+            _mockNavigationService.Verify(x => x.NavigateAsync(It.IsAny<string>()), Times.AtLeastOnce());
         }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)

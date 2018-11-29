@@ -5,12 +5,14 @@ using Prism.Commands;
 using System;
 using TP2.Validations.Rules;
 using TP2.Externalization;
+using Prism.Services;
 
 namespace TP2.ViewModels
 {
     public class RegisterPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
+        private readonly IPageDialogService _pageDialogService;
 
         private ValidatableObject<string> _email;
         private ValidatableObject<string> _password;
@@ -21,7 +23,7 @@ namespace TP2.ViewModels
         public DelegateCommand ExecuteValidatePassword => new DelegateCommand(ValidatePassword);
         public DelegateCommand ExecuteValidatePasswordConfirm => new DelegateCommand(ValidatePasswordConfirm);
 
-        public RegisterPageViewModel(INavigationService navigationService)
+        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
             :base(navigationService)
         {
             _email = new ValidatableObject<string>();
@@ -103,6 +105,7 @@ namespace TP2.ViewModels
             _email.Validate();
             _password.Validate();
             _passwordConfirm.Validate();
+            
         }
 
         public void ValidateEmail()
