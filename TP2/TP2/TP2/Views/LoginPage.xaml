@@ -5,8 +5,10 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TP2.Views.LoginPage">
     <StackLayout>
+        <Label Text="Courriel :"/>
         <Entry Text="{Binding UserName}"></Entry>
-        <Entry Text="{Binding UserPassword}"></Entry>
+        <Label Text="Mot de passe :"/>
+        <Entry Text="{Binding UserPassword}" IsPassword="True"></Entry>
         <Button Text="Connexion" Command="{Binding AuthenticateCommand}"></Button>
     </StackLayout>
 </ContentPage>

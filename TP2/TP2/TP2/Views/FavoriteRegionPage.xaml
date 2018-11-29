@@ -4,5 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TP2.Views.FavoriteRegionPage">
-  
+    <StackLayout>
+        <Label Text="Page des favories"/>
+    </StackLayout>
 </ContentPage>

@@ -4,6 +4,7 @@ using Prism.Navigation;
 using Prism.Services;
 using TP2.Externalization;
 using TP2.Services.Interfaces;
+using TP2.Views;
 
 namespace TP2.ViewModels
 {
@@ -53,7 +54,7 @@ namespace TP2.ViewModels
                 _authentificationService.LogIn(UserName, UserPassword);
                 if (_authentificationService.IsUserAuthenticated == true)
                 {
-                    await _navigationService.NavigateAsync("/" + nameof(Views.FavoriteRegionPage));
+                    await _navigationService.NavigateAsync(nameof(FavoriteRegionPage));
                 }
                 else
                 {
