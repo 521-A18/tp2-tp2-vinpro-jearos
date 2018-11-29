@@ -15,5 +15,6 @@
         <Entry x:Name="PasswordEntry" IsPassword="True" Text="{Binding Password.Value}" />
         <Label Text="Confirmer le mot de passe :" />
         <Entry x:Name="PasswordConfirmEntry" IsPassword="True" Text="{Binding PasswordConfirm.Value}" />
+        <Button Text="S'inscrire" Command="ExecuteUserPage" />
     </StackLayout>
 </ContentPage>
