@@ -20,35 +20,32 @@ namespace TP2.ViewModels
 
         public ValidatableObject<string> Email
         {
-            get; set;
-            //get => _email;
-            //set 
-            //{
-            //    _email = value;
-            //    RaisePropertyChanged();
-            //}
+            get => _email;
+            set
+            {
+                _email = value;
+                RaisePropertyChanged();
+            }
         }
 
         public ValidatableObject<string> Password
         {
-            get; set;
-            //get => _password;
-            //set
-            //{
-            //    _password = value;
-            //    RaisePropertyChanged();
-            //}
+            get => _password;
+            set
+            {
+                _password = value;
+                RaisePropertyChanged();
+            }
         }
 
         public ValidatableObject<string> PasswordConfirm
         {
-            get; set;
-            //get => _passwordConfirm;
-            //set
-            //{
-            //    _passwordConfirm = value;
-            //    RaisePropertyChanged();
-            //}
+            get => _passwordConfirm;
+            set
+            {
+                _passwordConfirm = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }
