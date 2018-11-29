@@ -38,7 +38,9 @@ namespace TP2
 
             containerRegistry.RegisterSingleton<IHttpClient, HttpClientService>();
             containerRegistry.RegisterSingleton<IApiService, ApiService>();
-            
+
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            containerRegistry.RegisterForNavigation<FavoriteRegionPage, FavoriteRegionPageViewModel>();
         }
     }
 }
