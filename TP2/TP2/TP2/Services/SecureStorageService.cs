@@ -1,31 +1,34 @@
 ﻿using System;
 using System.Threading.Tasks;
+using TP2.Services.Interfaces;
 using Xamarin.Essentials;
 
 namespace TP2.Services
 {
-    public async Task<string> GetEncryptionKeyAsync(string keyId)
+    public class SecureStorageService : ISecureStorageService
     {
-        try
+            public async Task<string> GetEncryptionKeyAsync(string keyId)
         {
-            return await SecureStorage.GetAsync(keyId);
+            try
+            {
+                return await SecureStorage.GetAsync(keyId);
+            }
+            catch
+            {
+                throw new ArgumentNullException(null, "Error");
+            }
         }
-        catch
-        {
-            throw new ArgumentNullException(null, "Error");
-        }
-    }
 
-    public async Task SetEncryptionKeyAsync(string keyId, string keyValue)
-    {
-        try
+        public async Task SetEncryptionKeyAsync(string keyId, string keyValue)
         {
-            await SecureStorage.SetAsync(keyId, keyValue);
-        }
-        catch
-        {
-            throw new ArgumentNullException();
+            try
+            {
+                await SecureStorage.SetAsync(keyId, keyValue);
+            }
+            catch
+            {
+                throw new ArgumentNullException();
+            }
         }
     }
-}
 }
