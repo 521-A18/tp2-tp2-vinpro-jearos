@@ -78,7 +78,7 @@ namespace TP2.UnitTests.ViewModel
         public void ValidatePasswordConfirmCommand_WithBadPasswordConfirm_ShouldValidatePasswordConfirmValidatableObject()
         {
             _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
-            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.BAD_PASSWORD_CONFIRM;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.BAD_PASSWORD;
 
             _registerPageViewModels.ExecuteUserPage.Execute();
 
@@ -105,7 +105,7 @@ namespace TP2.UnitTests.ViewModel
             _registerPageViewModels.ExecuteUserPage.Execute();
 
             var firstErrorMessage = _registerPageViewModels.Password.Errors.ElementAt(0);
-            Assert.Equal(UiText.PASSWORD_NEED_CAP_LETTER, firstErrorMessage);
+            Assert.Equal(UiText.PASSWORD_NEED_ONE_NUMBER, firstErrorMessage);
         }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)

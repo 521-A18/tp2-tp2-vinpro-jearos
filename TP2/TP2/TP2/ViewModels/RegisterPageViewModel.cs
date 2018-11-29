@@ -16,9 +16,7 @@ namespace TP2.ViewModels
         private ValidatableObject<string> _password;
         private ValidatableObject<string> _passwordConfirm;
 
-        public DelegateCommand ExecuteUserPage = new DelegateCommand(UserPageNavigation);
-
-        
+        public DelegateCommand ExecuteUserPage => new DelegateCommand(UserPageNavigation);
 
         public RegisterPageViewModel(INavigationService navigationService)
             :base(navigationService)
@@ -97,22 +95,24 @@ namespace TP2.ViewModels
             _passwordConfirm.AddValidationRule(HasAtleastOneNumber);
         }
 
-        private static void UserPageNavigation()
+        public void UserPageNavigation()
         {
-            throw new NotImplementedException();
+            _email.Validate();
+            _password.Validate();
+            _passwordConfirm.Validate();
         }
 
-        private void ValidateEmail()
+        public void ValidateEmail()
         {
             _email.Validate();
         }
 
-        private void ValidatePassword()
+        public void ValidatePassword()
         {
             _password.Validate();
         }
 
-        private void ValidatePasswordConfirm()
+        public void ValidatePasswordConfirm()
         {
             _passwordConfirm.Validate();
         }
