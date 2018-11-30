@@ -47,7 +47,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>del c:\temp\release.apk
-for /f %25%25i in ('dir $(SolutionDir)/s /b *.apk ^| findstr "bin\Release" ^| findstr "Signed"') do copy %25%25i c:\temp\release.apk</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
