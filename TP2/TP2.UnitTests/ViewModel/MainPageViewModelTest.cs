@@ -92,6 +92,14 @@ namespace TP2.UnitTests.ViewModel
             _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.ALERT_ERROR, UiText.OK), Times.AtLeastOnce());
         }
 
+        [Fact]
+        public void CreateAccount_whenClicked_ShouldNavigateToRegisterPage()
+        {
+            _mainPageViewModel.CreateAccount.Execute();
+
+            _mockNavigationService.Verify(x => x.NavigateAsync(It.Is<string>(s => s.Contains(nameof(RegisterPage)))), Times.AtLeastOnce());
+        }
+
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)
         {
             _eventRaised = true;

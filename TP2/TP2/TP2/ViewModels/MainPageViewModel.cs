@@ -1,11 +1,6 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TP2.Externalization;
 using TP2.Views;
 
@@ -19,6 +14,8 @@ namespace TP2.ViewModels
         private IPageDialogService _pageDialogService;
 
         public DelegateCommand SearchRegion => new DelegateCommand(Search);
+        public DelegateCommand CreateAccount => new DelegateCommand(RegisterPage);
+        public DelegateCommand LoginAccount => new DelegateCommand(LoginPage);
 
         public MainPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
             : base(navigationService)
@@ -55,6 +52,16 @@ namespace TP2.ViewModels
             {
                 await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.ALERT_ERROR, UiText.OK);
             }
-        } 
+        }
+        
+        private async void RegisterPage()
+        {
+            await _navigationService.NavigateAsync(nameof(RegisterPage));
+        }
+
+        private async void LoginPage()
+        {
+            await _navigationService.NavigateAsync(nameof(LoginPage));
+        }
     }
 }

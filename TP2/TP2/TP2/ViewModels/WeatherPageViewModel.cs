@@ -1,16 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Prism.Mvvm;
-using Prism.Navigation;
+﻿using Prism.Navigation;
 using Prism.Services;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using TP2.Externalization;
-using TP2.Models;
-using TP2.Services;
 using TP2.Services.Interfaces;
 using static TP2.Models.WeatherCondition;
 
