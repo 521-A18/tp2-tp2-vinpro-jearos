@@ -32,5 +32,17 @@ namespace TP2UI
             var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des favories");
             Assert.IsTrue(NameDisplayed);
         }
+
+        [Test]
+        public void FavoriteRegionPage_LogoutUserIsWorking_DisplayMainPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitLogin("123", "456");
+            weatherPageObject.LogoutUser();
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Région");
+            Assert.IsTrue(NameDisplayed);
+        }
     }
 }

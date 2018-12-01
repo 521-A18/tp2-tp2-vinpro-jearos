@@ -11,6 +11,7 @@ namespace TP2UI.PageObject
     class WeatherPageObject : BasePageObject
     {
         const string LOGIN_BUTTON = "LoginButton";
+        const string LOGOUT_BUTTON = "LogoutButton";
         const string EMAILLOGIN_ENTRY = "EmailLoginEntry";
         const string PASSWORDLOGIN_ENTRY = "PasswordLoginEntry";
         const string VALIDATION_BUTTON_LOGIN = "ValidationButtonLogin";
@@ -28,6 +29,11 @@ namespace TP2UI.PageObject
             App.EnterText(PASSWORDLOGIN_ENTRY, password.ToString());
             App.Back();
             App.Tap(VALIDATION_BUTTON_LOGIN);
+        }
+
+        public void LogoutUser()
+        {
+            App.Tap(LOGOUT_BUTTON);
         }
 
         public bool IsNameDisplayed(string nameToCheck)
