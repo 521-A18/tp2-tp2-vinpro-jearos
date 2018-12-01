@@ -12,12 +12,22 @@ namespace TP2UI.PageObject
     {
         const string LOGIN_BUTTON = "LoginButton";
         const string LOGOUT_BUTTON = "LogoutButton";
+        const string REGION_ENTRY = "RegionEntry";
         const string EMAILLOGIN_ENTRY = "EmailLoginEntry";
         const string PASSWORDLOGIN_ENTRY = "PasswordLoginEntry";
+        const string VALIDATION_BUTTON_REGION = "ValidationButtonRegion";
         const string VALIDATION_BUTTON_LOGIN = "ValidationButtonLogin";
 
         public WeatherPageObject(IApp app) : base(app)
         {
+        }
+
+        public void SubmitRegion(string region)
+        {
+            App.WaitForElement(REGION_ENTRY);
+            App.EnterText(REGION_ENTRY, region.ToString());
+            App.Back();
+            App.Tap(VALIDATION_BUTTON_REGION);
         }
 
         public void SubmitLogin(string email, string password)

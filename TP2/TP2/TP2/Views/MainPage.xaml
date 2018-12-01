@@ -5,8 +5,8 @@
 
     <StackLayout>
         <Label Text="Région" />
-        <Entry Placeholder="Quebec" Text="{Binding Region}"/>
-        <Button Command="{Binding SearchRegion}" Text="Rechercher" />
+        <Entry Placeholder="Quebec" Text="{Binding Region}" AutomationId="RegionEntry"/>
+        <Button Command="{Binding SearchRegion}" Text="Rechercher" AutomationId="ValidationButtonRegion"/>
         <Button Command="{Binding CreateAccount}" Text="Créer un compte" />
         <Button Command="{Binding LoginAccount}" Text="Connexion" AutomationId="LoginButton"/>
     </StackLayout>

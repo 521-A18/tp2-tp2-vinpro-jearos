@@ -23,6 +23,17 @@ namespace TP2UI
         }
 
         [Test]
+        public void MainPage_SumbitRegionIsWorking_DisplayWeatherPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitRegion("quebec");
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Quebec");
+            Assert.IsTrue(NameDisplayed);
+        }
+
+        [Test]
         public void LoginPage_LoginToUserIsWorking_DisplayFavoriteRegionPage()
         {
             var weatherPageObject = new WeatherPageObject(app);
