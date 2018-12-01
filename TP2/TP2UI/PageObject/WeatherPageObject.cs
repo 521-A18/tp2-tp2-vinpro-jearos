@@ -32,12 +32,13 @@ namespace TP2UI.PageObject
 
         public void SubmitLogin(string email, string password)
         {
-            App.Tap(LOGIN_BUTTON);
             App.WaitForElement(EMAILLOGIN_ENTRY);
             App.EnterText(EMAILLOGIN_ENTRY, email.ToString());
+            App.Back();
             App.WaitForElement(PASSWORDLOGIN_ENTRY);
             App.EnterText(PASSWORDLOGIN_ENTRY, password.ToString());
             App.Back();
+            App.ScrollDownTo(VALIDATION_BUTTON_LOGIN);
             App.Tap(VALIDATION_BUTTON_LOGIN);
         }
 

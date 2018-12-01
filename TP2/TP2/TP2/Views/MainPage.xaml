@@ -3,12 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TP2.Views.MainPage">
 
-    <StackLayout>
-        <Label Text="Région" />
-        <Entry Placeholder="Quebec" Text="{Binding Region}" AutomationId="RegionEntry"/>
-        <Button Command="{Binding SearchRegion}" Text="Rechercher" AutomationId="ValidationButtonRegion"/>
-        <Button Command="{Binding CreateAccount}" Text="Créer un compte" />
-        <Button Command="{Binding LoginAccount}" Text="Connexion" AutomationId="LoginButton"/>
-    </StackLayout>
+    <ScrollView>
+        <StackLayout>
+            <Label Text="Région" />
+            <Entry Placeholder="Quebec" Text="{Binding Region}" AutomationId="RegionEntry"/>
+            <Button Command="{Binding SearchRegion}" Text="Rechercher" AutomationId="ValidationButtonRegion"/>
+            <Button Command="{Binding CreateAccount}" Text="Créer un compte" />
+            <Label Text="Courriel :"/>
+            <Entry Text="{Binding UserName}" AutomationId="EmailLoginEntry"></Entry>
+            <Label Text="Mot de passe :"/>
+            <Entry Text="{Binding UserPassword}" IsPassword="True" AutomationId="PasswordLoginEntry"></Entry>
+            <Button Text="Connexion" Command="{Binding AuthenticateCommand}" AutomationId="ValidationButtonLogin"></Button>
+        </StackLayout>
+    </ScrollView>    
 
 </ContentPage>

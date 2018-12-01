@@ -40,7 +40,7 @@ namespace TP2UI
 
             weatherPageObject.SubmitLogin("123", "456");
 
-            var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des favories");
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des favoris");
             Assert.IsTrue(NameDisplayed);
         }
 
@@ -52,7 +52,7 @@ namespace TP2UI
             weatherPageObject.SubmitLogin("123", "456");
             weatherPageObject.LogoutUser();
 
-            var NameDisplayed = weatherPageObject.IsNameDisplayed("Région");
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Courriel :");
             Assert.IsTrue(NameDisplayed);
         }
     }
