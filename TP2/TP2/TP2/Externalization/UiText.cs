@@ -14,5 +14,6 @@
         public const string PASSWORD_NEED_ONE_NUMBER = "Le mot de passe doit contenir au moins un chiffre.";
         public const string PASSWORD_AND_CONFIRM_ARE_DIFFERENT = "La confirmation du mot de passe n'est pas valide.";
         public const string ELEMENT_ARE_INVALIDE = "Les éléments entrés ne sont pas valide.";
+        public const string EMAIL_ALREADY_EXIST = "Le courriel existe déjà.";
     }
 }

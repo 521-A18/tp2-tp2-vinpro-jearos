@@ -124,9 +124,10 @@ namespace TP2.ViewModels
                 else if (Email.IsValid && Password.IsValid && PasswordConfirm.IsValid)
                 {
                     _registerService.RegisterUser(Email.Value, Password.Value);
-                    _navigationService.NavigateAsync("/" + nameof(MainPage));
+                    _navigationService.GoBackToRootAsync();
                 }
                 else _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.ELEMENT_ARE_INVALIDE, UiText.OK);
+                
             }
             catch
             {
