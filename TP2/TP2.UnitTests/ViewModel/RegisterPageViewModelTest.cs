@@ -24,6 +24,7 @@ namespace TP2.UnitTests.ViewModel
         private Mock<IRepository<User>> _mockRepository;
         private ICryptoService _cryptoService;
         private Mock<ISecureStorageService> _mockSecureStorageService;
+        private Mock<IRegisterService> _mockRegisterService;
 
         private bool _eventRaised = false;
 
@@ -34,8 +35,9 @@ namespace TP2.UnitTests.ViewModel
             _cryptoService = new CryptoService();
             _mockRepository = new Mock<IRepository<User>>();
             _mockSecureStorageService = new Mock<ISecureStorageService>();
+            _mockRegisterService = new Mock<IRegisterService>();
 
-            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object, _cryptoService, _mockRepository.Object, _mockSecureStorageService.Object);
+            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object, _cryptoService, _mockRepository.Object, _mockSecureStorageService.Object, _mockRegisterService.Object);
         }
 
         [Fact]

@@ -17,7 +17,8 @@ namespace TP2.ViewModels
         private readonly IPageDialogService _pageDialogService;
         private readonly IRepository<User> _repository;
         private readonly ICryptoService _cryptoService;
-        private readonly ISecureStorageService _secureStorageService; 
+        private readonly ISecureStorageService _secureStorageService;
+        private readonly IRegisterService _registerService;
 
         private ValidatableObject<string> _email;
         private ValidatableObject<string> _password;
@@ -28,7 +29,7 @@ namespace TP2.ViewModels
         public DelegateCommand ExecuteValidatePassword => new DelegateCommand(ValidatePassword);
         public DelegateCommand ExecuteValidatePasswordConfirm => new DelegateCommand(ValidatePasswordConfirm);
 
-        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ICryptoService cryptoService, IRepository<User> repository, ISecureStorageService secureStorageService)
+        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ICryptoService cryptoService, IRepository<User> repository, ISecureStorageService secureStorageService, IRegisterService registerService)
             :base(navigationService)
         {
             _email = new ValidatableObject<string>();
@@ -42,6 +43,7 @@ namespace TP2.ViewModels
             _cryptoService = cryptoService;
             _repository = repository;
             _secureStorageService = secureStorageService;
+            _registerService = registerService;
         }
 
         public ValidatableObject<string> Email
@@ -121,14 +123,7 @@ namespace TP2.ViewModels
                 if (Password.Value != PasswordConfirm.Value) _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.PASSWORD_AND_CONFIRM_ARE_DIFFERENT, UiText.OK);
                 else if (Email.IsValid && Password.IsValid && PasswordConfirm.IsValid)
                 {
-                    User newUser = new User();
-                    newUser.Login = Email.Value;
-                    string salt = _cryptoService.GenerateSalt();
-                    newUser.PasswordSalt = salt;
-                    newUser.HashedPassword = _cryptoService.HashSHA512(Password.Value, salt);
-                    _repository.Add(newUser);
-                    _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == Email.Value).Id.ToString(), _cryptoService.GenerateEncryptionKey());
-
+                    _registerService.RegisterUser(Email.Value, Password.Value);
                     _navigationService.NavigateAsync("/" + nameof(MainPage));
                 }
                 else _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.ELEMENT_ARE_INVALIDE, UiText.OK);
