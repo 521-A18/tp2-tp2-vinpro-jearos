@@ -49,6 +49,7 @@ namespace TP2
             containerRegistry.RegisterSingleton<IAuthentificationService, AuthentificationService>();
             containerRegistry.RegisterSingleton<ICryptoService, CryptoService>();
             containerRegistry.RegisterSingleton<ISecureStorageService, SecureStorageService>();
+            containerRegistry.RegisterSingleton<IRegisterService, RegisterService>();
 
             var databasePath = DependencyService.Get<IFileHelper>().GetLocalFilePath("MyDatabase.db3");
             var databaseSqLiteConnection = new SQLiteConnection(databasePath);
