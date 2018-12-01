@@ -28,3 +28,41 @@ steps:
     command: test
     projects: '**/*.UnitTests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+
+# Android Signing
+# Sign and align Android APK files
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*.apk' 
+    apksign: true # Optional
+    apksignerKeystoreFile: 'tp2.keystore' # Required when apksign == True
+    apksignerKeystorePassword: 'qwerty' # Optional
+    apksignerKeystoreAlias: tp2.key # Optional
+    apksignerKeyPassword: 'qwerty' # Optional
+    apksignerArguments: '--verbose' # Optional
+    #apksignerFile: # Optional
+    zipalign: true # Optional
+    #zipalignFile: # Optional
+    
+#- task: CopyFiles@2
+#  inputs:
+#    contents: '**/*.apk'
+#    targetFolder: '$(build.artifactStagingDirectory)'
+
+#- task: PublishBuildArtifacts@1
+
+- task: FtpUpload@1
+  inputs:
+    credentialsOption: 'inputs' # Options: serviceEndpoint, inputs
+    #serverEndpoint: # Required when credentialsOption == ServiceEndpoint
+    serverUrl: 'ftp://infoazureftp.cegep-ste-foy.qc.ca' # Required when credentialsOption == Inputs
+    username: '$(cegep.login)' # Required when credentialsOption == Inputs
+    password: '$(cegep.password)' # Required when credentialsOption == Inputs
+    rootDirectory: '$(Build.SourcesDirectory)'
+    filePatterns: '**/*.apk' 
+    remoteDirectory: '/$(Build.Repository.Name)' 
+    #clean: false 
+    #cleanContents: false # Required when clean == False
+    #overwrite: true 
+    #preservePaths: false 
+#trustSSL: false

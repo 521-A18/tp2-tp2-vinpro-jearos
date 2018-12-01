@@ -67,7 +67,7 @@ namespace TP2
 
             CryptoService cryptoService = new CryptoService();
             SecureStorageService secureStorageService = new SecureStorageService();
-            ; var salt = cryptoService.GenerateSalt();
+            var salt = cryptoService.GenerateSalt();
             var key = cryptoService.GenerateEncryptionKey();
             var user1 = new User()
             {
