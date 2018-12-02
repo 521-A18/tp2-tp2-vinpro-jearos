@@ -109,7 +109,7 @@ namespace TP2.UnitTests.ViewModel
             _authServiceMock.Setup(auth => auth.IsUserAuthenticated).Returns(false);
             _mainPageViewModel.AuthenticateCommand.Execute();
 
-            _mockNavigationService.Verify(x => x.NavigateAsync("/" + nameof(Views.FavoriteRegionPage)), Times.Never);
+            _mockNavigationService.Verify(x => x.NavigateAsync(nameof(FavoriteRegionPage)), Times.Never);
         }
 
         [Fact]

@@ -23,6 +23,7 @@ namespace TP2.UnitTests.ViewModel
         public WeatherPageViewModel _weatherPageViewModel;
 
         public bool _eventRaised = false;
+        public bool _isConnected = true;
         public RootObject _rootObject;
 
         public WeatherPageViewModelTest()
@@ -32,7 +33,6 @@ namespace TP2.UnitTests.ViewModel
             _mockAuthentificationService = new Mock<IAuthentificationService>();
             _mockFavoriteRegionListService = new Mock<IFavoriteRegionListService>();
             _apiServiceMock = new Mock<IApiService>();
-            _mockAuthentificationService.Setup(x => x.AuthenticatedUserName).Returns("test");
             _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
         }
 
@@ -84,35 +84,38 @@ namespace TP2.UnitTests.ViewModel
             _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.WRONG_REGION, UiText.OK));
         }
 
-        //[Fact]
-        //public void AddRegion_WhenWhenUserIsNotConnected_ShouldDisplayAlert()
-        //{
-        //    _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+        [Fact]
+        public void AddRegion_WhenWhenUserIsNotConnected_ShouldDisplayAlert()
+        {
+            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(false);
+            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
 
-        //    _weatherPageViewModel.putInFavorite.Execute();
+            _weatherPageViewModel.putInFavorite.Execute();
 
-        //    _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.NEED_TO_BE_CONNECTED, UiText.OK));
-        //}
+           _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.NEED_TO_BE_CONNECTED, UiText.OK));
+        }
 
-        //[Fact]
-        //public void AddRegion_WhenWhenUserIsConnected_ShouldDisplayAlert()
-        //{
-        //    _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+        [Fact]
+        public void AddRegion_WhenWhenUserIsConnected_ShouldDisplayAlert()
+        {
+            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
 
-        //    _weatherPageViewModel.putInFavorite.Execute();
+            _weatherPageViewModel.putInFavorite.Execute();
 
-        //    _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.REGION_ADDED, UiText.OK));
-        //}
+            _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.REGION_ADDED, UiText.OK));
+        }
 
-        //[Fact]
-        //public void AddRegion_WhenWhenUserIsConnected_ShouldNavigate()
-        //{
-        //    _mockAuthentificationService.SetupProperty(x => x.IsUserAuthenticated, true);
+        [Fact]
+        public void AddRegion_WhenWhenUserIsConnected_ShouldNavigate()
+        {
+            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
 
-        //    _weatherPageViewModel.putInFavorite.Execute();
+            _weatherPageViewModel.putInFavorite.Execute();
 
-        //    _navigationServiceMock.Verify(x => x.NavigateAsync(It.Is<string>(s => s.Contains(nameof(WeatherPage)))), Times.AtLeastOnce());
-        //}
+            _navigationServiceMock.Verify(x => x.NavigateAsync(nameof(FavoriteRegionPage)), Times.AtLeastOnce);
+        }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)
         {
