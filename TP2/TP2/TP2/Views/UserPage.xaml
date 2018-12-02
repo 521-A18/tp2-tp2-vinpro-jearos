@@ -7,6 +7,6 @@
     <StackLayout>
         <Label Text="{Binding UserName}"/>
         <Button Text="Deconnexion" Command="{Binding LogoutCommand}" AutomationId="LogoutButton"/>
-        <Button Text="Vos favoris" Command="{Binding FavoriteRegionCommand}" AutomationId="FavoriteButton"/>
+        <Button Text="Vos favoris" Command="{Binding FavoriteRegionCommand}" AutomationId="FavoriteRegionButton"/>
     </StackLayout>
 </ContentPage>

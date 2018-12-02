@@ -23,7 +23,7 @@ namespace TP2UI
         }
 
         [Test]
-        public void MainPage_SumbitRegionIsWorking_DisplayWeatherPage()
+        public void MainPage_SubmitRegionIsWorking_DisplayWeatherPage()
         {
             var weatherPageObject = new WeatherPageObject(app);
 
@@ -34,18 +34,29 @@ namespace TP2UI
         }
 
         [Test]
+        public void RegisterPage_RegisterUserIsWorking_DisplayMainPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitRegister("exemple@gmail.com", "Testtest12");
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Courriel :");
+            Assert.IsTrue(NameDisplayed);
+        }
+
+        [Test]
         public void LoginPage_LoginToUserIsWorking_DisplayFavoriteRegionPage()
         {
             var weatherPageObject = new WeatherPageObject(app);
 
             weatherPageObject.SubmitLogin("123", "456");
 
-            var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des regions favorites");
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Vos favoris");
             Assert.IsTrue(NameDisplayed);
         }
 
         [Test]
-        public void FavoriteRegionPage_LogoutUserIsWorking_DisplayMainPage()
+        public void UserPage_LogoutUserIsWorking_DisplayMainPage()
         {
             var weatherPageObject = new WeatherPageObject(app);
 
@@ -53,6 +64,18 @@ namespace TP2UI
             weatherPageObject.LogoutUser();
 
             var NameDisplayed = weatherPageObject.IsNameDisplayed("Courriel :");
+            Assert.IsTrue(NameDisplayed);
+        }
+
+        [Test]
+        public void FavoriteRegionPage_FavoriteRegionPageIsWorking_DisplayFavoriteRegionPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitLogin("123", "456");
+            weatherPageObject.FavoriteRegionPage();
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des regions favorites");
             Assert.IsTrue(NameDisplayed);
         }
     }

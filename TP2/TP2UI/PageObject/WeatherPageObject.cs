@@ -10,16 +10,37 @@ namespace TP2UI.PageObject
 {
     class WeatherPageObject : BasePageObject
     {
-        const string LOGIN_BUTTON = "LoginButton";
+        const string REGISTER_BUTTON = "RegisterButton";
         const string LOGOUT_BUTTON = "LogoutButton";
+        const string FAVORITEREGION_BUTTON = "FavoriteRegionButton";
         const string REGION_ENTRY = "RegionEntry";
+        const string EMAILREGISTER_ENTRY = "EmailRegisterEntry";
+        const string PASSWORDREGISTER_ENTRY = "PasswordRegisterEntry";
+        const string CONFIRMPASSWORDREGISTER_ENTRY = "ConfirmPasswordRegisterEntry";
         const string EMAILLOGIN_ENTRY = "EmailLoginEntry";
         const string PASSWORDLOGIN_ENTRY = "PasswordLoginEntry";
         const string VALIDATION_BUTTON_REGION = "ValidationButtonRegion";
+        const string VALIDATION_BUTTON_REGISTER = "ValidationButtonRegister";
         const string VALIDATION_BUTTON_LOGIN = "ValidationButtonLogin";
 
         public WeatherPageObject(IApp app) : base(app)
         {
+        }
+
+        public void SubmitRegister(string email, string password)
+        {
+            App.Tap(REGISTER_BUTTON);
+            App.WaitForElement(EMAILREGISTER_ENTRY);
+            App.EnterText(EMAILREGISTER_ENTRY, email.ToString());
+            App.Back();
+            App.WaitForElement(PASSWORDREGISTER_ENTRY);
+            App.EnterText(PASSWORDREGISTER_ENTRY, password.ToString());
+            App.Back();
+            App.WaitForElement(CONFIRMPASSWORDREGISTER_ENTRY);
+            App.EnterText(CONFIRMPASSWORDREGISTER_ENTRY, password.ToString());
+            App.Back();
+            App.ScrollDownTo(VALIDATION_BUTTON_REGISTER);
+            App.Tap(VALIDATION_BUTTON_REGISTER);
         }
 
         public void SubmitRegion(string region)
@@ -45,6 +66,11 @@ namespace TP2UI.PageObject
         public void LogoutUser()
         {
             App.Tap(LOGOUT_BUTTON);
+        }
+
+        public void FavoriteRegionPage()
+        {
+            App.Tap(FAVORITEREGION_BUTTON);
         }
 
         public bool IsNameDisplayed(string nameToCheck)
