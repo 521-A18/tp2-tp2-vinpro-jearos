@@ -3,7 +3,10 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using TP2.Models.Entities;
+using TP2.Services.Interfaces;
 using TP2.Views;
 
 namespace TP2.ViewModels
@@ -11,17 +14,22 @@ namespace TP2.ViewModels
 	public class FavoriteRegionPageViewModel : ViewModelBase
     {
         private INavigationService _navigationService;
-        public FavoriteRegionPageViewModel(INavigationService navigationService)
+        private ObservableCollection<Region> _favoriteRegionList;
+        public FavoriteRegionPageViewModel(INavigationService navigationService, IFavoriteRegionListService favoriteRegionListService, IAuthentificationService authentificationService)
             : base(navigationService)
         {
             _navigationService = navigationService;
+            FavoriteRegionList = new ObservableCollection<Region>(favoriteRegionListService.GetFavoriteRegionList(authentificationService.AuthenticatedUserName));
         }
 
-        public DelegateCommand LogoutCommand => new DelegateCommand(Logout);
-
-        private async void Logout()
+        public ObservableCollection<Region> FavoriteRegionList
         {
-            await _navigationService.GoBackToRootAsync();
+            get => _favoriteRegionList;
+            set
+            {
+                _favoriteRegionList = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }

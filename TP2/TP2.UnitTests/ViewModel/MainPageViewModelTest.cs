@@ -127,7 +127,7 @@ namespace TP2.UnitTests.ViewModel
             _authServiceMock.Setup(auth => auth.IsUserAuthenticated).Returns(true);
             _mainPageViewModel.AuthenticateCommand.Execute();
 
-            _mockNavigationService.Verify(x => x.NavigateAsync(nameof(FavoriteRegionPage)), Times.Once);
+            _mockNavigationService.Verify(x => x.NavigateAsync(nameof(UserPage)), Times.Once);
         }
 
         [Fact]

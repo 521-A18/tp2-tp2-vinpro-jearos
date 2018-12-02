@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TP2.Models.Entities
+﻿namespace TP2.Models.Entities
 {
     public class User : Entity
     {

@@ -21,6 +21,8 @@ namespace TP2.Services
 
         public int AuthenticatedUserId { get; private set; }
 
+        public string AuthenticatedUserName { get; private set; }
+
         public void LogIn(string login, string password)
         {
             try
@@ -37,6 +39,7 @@ namespace TP2.Services
                             IsValidUser = true;
                             IsUserAuthenticated = true;
                             AuthenticatedUserId = element.Id;
+                            AuthenticatedUserName = element.Login;
                             break;
                         }
                     }

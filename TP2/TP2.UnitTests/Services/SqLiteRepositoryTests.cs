@@ -3,9 +3,7 @@ using TP2.Models.Entities;
 using TP2.Services;
 using SQLite;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 
 namespace TP2.UnitTests.Services

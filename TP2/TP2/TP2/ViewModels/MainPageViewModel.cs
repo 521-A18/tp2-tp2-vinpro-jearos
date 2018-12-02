@@ -19,7 +19,6 @@ namespace TP2.ViewModels
 
         public DelegateCommand SearchRegion => new DelegateCommand(Search);
         public DelegateCommand CreateAccount => new DelegateCommand(RegisterPage);
-        public DelegateCommand LoginAccount => new DelegateCommand(LoginPage);
 
         public MainPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IAuthentificationService authentificationService)
             : base(navigationService)
@@ -68,7 +67,7 @@ namespace TP2.ViewModels
                 _authentificationService.LogIn(UserName, UserPassword);
                 if (_authentificationService.IsUserAuthenticated == true)
                 {
-                    await _navigationService.NavigateAsync(nameof(FavoriteRegionPage));
+                    await _navigationService.NavigateAsync(nameof(UserPage));
                 }
                 else
                 {
@@ -104,11 +103,6 @@ namespace TP2.ViewModels
         private async void RegisterPage()
         {
             await _navigationService.NavigateAsync(nameof(RegisterPage));
-        }
-
-        private async void LoginPage()
-        {
-            await _navigationService.NavigateAsync(nameof(LoginPage));
         }
     }
 }

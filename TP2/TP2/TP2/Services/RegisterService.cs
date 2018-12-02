@@ -14,13 +14,15 @@ namespace TP2.Services
         private IRepository<User> _repository;
         private ISecureStorageService _secureStorageService;
         private IPageDialogService _pageDialogService;
+        private IFavoriteRegionListService _favoriteRegionListService;
 
-        public RegisterService(IRepository<User> repository, ISecureStorageService secureStorageService, IPageDialogService pageDialogService)
+        public RegisterService(IRepository<User> repository, ISecureStorageService secureStorageService, IPageDialogService pageDialogService, IFavoriteRegionListService favoriteRegionListService)
         {
             _cryptoService = new CryptoService();
             _repository = repository;
             _secureStorageService = secureStorageService;
             _pageDialogService = pageDialogService;
+            _favoriteRegionListService = favoriteRegionListService;
         }
 
         public void RegisterUser(string email, string password)
@@ -35,9 +37,9 @@ namespace TP2.Services
                 {
                     Login = email,
                     HashedPassword = _cryptoService.HashSHA512(password, salt),
-                    PasswordSalt = salt
+                    PasswordSalt = salt,
                 };
-
+                _favoriteRegionListService.AddUserFavoriteList(newUser.Login);
                 _repository.Add(newUser);
                 _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == email).Id.ToString(), _cryptoService.GenerateEncryptionKey());
             }

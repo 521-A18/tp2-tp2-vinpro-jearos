@@ -5,7 +5,31 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TP2.Views.FavoriteRegionPage">
     <StackLayout>
-        <Label Text="Page des favoris"/>
-        <Button Text="Deconnexion" Command="{Binding LogoutCommand}" AutomationId="LogoutButton"></Button>
+        <Label Text="Page des regions favorites"/>
+        <ListView SeparatorVisibility="None"
+              ItemsSource="{Binding FavoriteRegionList}">
+            <ListView.RowHeight>
+                <OnPlatform x:TypeArguments="x:Int32"
+                        iOS="80"
+                        Android="80"
+                        WinPhone="90" />
+            </ListView.RowHeight>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ContentView Padding="5">
+                            <Frame OutlineColor="Accent"
+                               Padding="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Name}"></Label>
+                                     </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ContentView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 </ContentPage>

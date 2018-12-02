@@ -40,7 +40,7 @@ namespace TP2UI
 
             weatherPageObject.SubmitLogin("123", "456");
 
-            var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des favoris");
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des regions favorites");
             Assert.IsTrue(NameDisplayed);
         }
 
