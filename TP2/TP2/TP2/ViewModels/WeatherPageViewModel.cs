@@ -1,7 +1,10 @@
-﻿using Prism.Navigation;
+﻿using Prism.Commands;
+using Prism.Navigation;
 using Prism.Services;
 using TP2.Externalization;
+using TP2.Models.Entities;
 using TP2.Services.Interfaces;
+using TP2.Views;
 using static TP2.Models.WeatherCondition;
 
 namespace TP2.ViewModels
@@ -15,13 +18,21 @@ namespace TP2.ViewModels
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
         private IApiService _apiService;
+        private bool _userConnected;
+        private string _userName;
+        private IFavoriteRegionListService _favoriteRegionListService;
 
-        public WeatherPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IApiService apiService)
+        public DelegateCommand putInFavorite => new DelegateCommand(AddFavorite);
+
+        public WeatherPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IApiService apiService, IAuthentificationService authentificationService, IFavoriteRegionListService favoriteRegionListService)
             :base(navigationService)
         {
             _pageDialogService = pageDialogService;
             _navigationService = navigationService;
             _apiService = apiService;
+            _userConnected = authentificationService.IsUserAuthenticated;
+            _userName = authentificationService.AuthenticatedUserName;
+            _favoriteRegionListService = favoriteRegionListService;
         }
 
         public override void OnNavigatingTo(INavigationParameters param)
@@ -75,6 +86,14 @@ namespace TP2.ViewModels
             
         }
 
-        
+        private async void AddFavorite()
+        {
+            if (_userConnected == false) await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.NEED_TO_BE_CONNECTED, UiText.OK);
+            else
+            {
+                _favoriteRegionListService.AddRegion(_userName, new Region(_region));
+                await _navigationService.NavigateAsync(nameof(FavoriteRegionPage));
+            }
+        }
     }
 }

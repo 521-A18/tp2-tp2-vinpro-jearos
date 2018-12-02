@@ -15,5 +15,6 @@
         public const string PASSWORD_AND_CONFIRM_ARE_DIFFERENT = "La confirmation du mot de passe n'est pas valide.";
         public const string ELEMENT_ARE_INVALIDE = "Les éléments entrés ne sont pas valide.";
         public const string EMAIL_ALREADY_EXIST = "Le courriel existe déjà.";
+        public const string NEED_TO_BE_CONNECTED = "Vous devez être connecté pour mettre une région en favorie.";
     }
 }

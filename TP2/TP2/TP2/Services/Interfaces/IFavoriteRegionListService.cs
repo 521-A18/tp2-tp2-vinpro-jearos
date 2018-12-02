@@ -7,5 +7,7 @@ namespace TP2.Services.Interfaces
     {
         void AddUserFavoriteList(string login);
         Collection<Region> GetFavoriteRegionList(string login);
+        void AddRegion(string login, Region region);
+        void RemoveRegion(string login, Region region);
     }
 }
