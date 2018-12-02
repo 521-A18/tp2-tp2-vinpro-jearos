@@ -15,7 +15,7 @@
     <ScrollView>
         <StackLayout>
             <Label Text="Courriel :" />
-            <Entry x:Name="EmailEntry" Placeholder="exemple@gmail.com" Text="{Binding Email.Value}">
+            <Entry x:Name="EmailEntry" Placeholder="exemple@gmail.com" Text="{Binding Email.Value}" AutomationId="EmailRegisterEntry">
                 <Entry.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidateEmail}" />
                 </Entry.Behaviors>
@@ -28,7 +28,7 @@
             <Label Text="{Binding Email.Errors, Converter={converters:FirstValidationErrorToTextConverter}}" />
 
             <Label Text="Mot de passe :" />
-            <Entry x:Name="PasswordEntry" IsPassword="True" Text="{Binding Password.Value}">
+            <Entry x:Name="PasswordEntry" IsPassword="True" Text="{Binding Password.Value}" AutomationId="PasswordRegisterEntry">
                 <Entry.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidatePassword}" />
                 </Entry.Behaviors>
@@ -41,7 +41,7 @@
             <Label Text="{Binding Password.Errors, Converter={converters:FirstValidationErrorToTextConverter}}" />
 
             <Label Text="Confirmer le mot de passe :" />
-            <Entry x:Name="PasswordConfirmEntry" IsPassword="True" Text="{Binding PasswordConfirm.Value}">
+            <Entry x:Name="PasswordConfirmEntry" IsPassword="True" Text="{Binding PasswordConfirm.Value}" AutomationId="ConfirmPasswordRegisterEntry">
                 <Entry.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding ExecuteValidatePasswordConfirm}" />
                 </Entry.Behaviors>
@@ -53,7 +53,7 @@
             </Entry>
             <Label Text="{Binding PasswordConfirm.Errors, Converter={converters:FirstValidationErrorToTextConverter}}" />
 
-            <Button Text="S'inscrire" Command="{Binding ExecuteUserPage}" />
+            <Button Text="S'inscrire" Command="{Binding ExecuteUserPage}" AutomationId="ValidationButtonRegister"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>

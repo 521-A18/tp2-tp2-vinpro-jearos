@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using Prism;
 using Prism.Ioc;
@@ -41,12 +42,14 @@ namespace TP2
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<WeatherPage, WeatherPageViewModel>();
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
+            containerRegistry.RegisterForNavigation<UserPage, UserPageViewModel>();
+            containerRegistry.RegisterForNavigation<FavoriteRegionPage, FavoriteRegionPageViewModel>();
 
             containerRegistry.RegisterSingleton<IHttpClient, HttpClientService>();
             containerRegistry.RegisterSingleton<IApiService, ApiService>();
 
-            containerRegistry.RegisterForNavigation<FavoriteRegionPage, FavoriteRegionPageViewModel>();
             containerRegistry.RegisterSingleton<IAuthentificationService, AuthentificationService>();
+            containerRegistry.RegisterSingleton<IFavoriteRegionListService, FavoriteRegionListService>();
             containerRegistry.RegisterSingleton<ICryptoService, CryptoService>();
             containerRegistry.RegisterSingleton<ISecureStorageService, SecureStorageService>();
             containerRegistry.RegisterSingleton<IRegisterService, RegisterService>();
@@ -62,9 +65,7 @@ namespace TP2
         private async void SeedTestData()
         {
             var userRepository = Container.Resolve<IRepository<User>>();
-            if (userRepository.GetAll().Count() != 0)
-                return;
-
+            var favoriteRegionListService = Container.Resolve<IFavoriteRegionListService>();
             CryptoService cryptoService = new CryptoService();
             SecureStorageService secureStorageService = new SecureStorageService();
             var salt = cryptoService.GenerateSalt();
@@ -75,6 +76,10 @@ namespace TP2
                 HashedPassword = cryptoService.HashSHA512("456", salt),
                 PasswordSalt = salt,
             };
+            favoriteRegionListService.AddUserFavoriteList(user1.Login);
+            if (userRepository.GetAll().Count() != 0)
+                return;
+
             userRepository.Add(user1);
             await secureStorageService.SetEncryptionKeyAsync(userRepository.GetAll().FirstOrDefault(x => x.Login == "123").Id.ToString(), key);
         }

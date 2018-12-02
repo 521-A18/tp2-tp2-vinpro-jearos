@@ -8,7 +8,7 @@
             <Label Text="Région" />
             <Entry Placeholder="Quebec" Text="{Binding Region}" AutomationId="RegionEntry"/>
             <Button Command="{Binding SearchRegion}" Text="Rechercher" AutomationId="ValidationButtonRegion"/>
-            <Button Command="{Binding CreateAccount}" Text="Créer un compte" />
+            <Button Command="{Binding CreateAccount}" Text="Créer un compte" AutomationId="RegisterButton" />
             <Label Text="Courriel :"/>
             <Entry Text="{Binding UserName}" AutomationId="EmailLoginEntry"></Entry>
             <Label Text="Mot de passe :"/>

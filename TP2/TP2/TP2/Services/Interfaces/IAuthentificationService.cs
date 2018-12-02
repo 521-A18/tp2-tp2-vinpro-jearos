@@ -8,6 +8,7 @@ namespace TP2.Services.Interfaces
     {
         bool IsUserAuthenticated { get; }
         int AuthenticatedUserId { get; }
+        string AuthenticatedUserName { get; }
         void LogIn(string login, string password);
     }
 }

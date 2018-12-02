@@ -17,6 +17,7 @@ namespace TP2.UnitTests.Services
         private Mock<IRepository<User>> _mockRepository;
         private Mock<ISecureStorageService> _mockSercureStorageService;
         private Mock<IPageDialogService> _mockPageDialogService;
+        private Mock<IFavoriteRegionListService> _mockFavoriteRegionList;
         private ICryptoService _cryptoService;
 
         private List<User> _list;
@@ -33,6 +34,7 @@ namespace TP2.UnitTests.Services
             _mockRepository = new Mock<IRepository<User>>();
             _mockSercureStorageService = new Mock<ISecureStorageService>();
             _mockPageDialogService = new Mock<IPageDialogService>();
+            _mockFavoriteRegionList = new Mock<IFavoriteRegionListService>();
             _cryptoService = new CryptoService();
 
             _list = new List<User>();
@@ -40,7 +42,7 @@ namespace TP2.UnitTests.Services
 
             _mockRepository.Setup(x => x.GetAll()).Returns(_list);
 
-            _registerService = new RegisterService(_mockRepository.Object, _mockSercureStorageService.Object, _mockPageDialogService.Object);
+            _registerService = new RegisterService(_mockRepository.Object, _mockSercureStorageService.Object, _mockPageDialogService.Object, _mockFavoriteRegionList.Object);
         }
 
         [Fact]
