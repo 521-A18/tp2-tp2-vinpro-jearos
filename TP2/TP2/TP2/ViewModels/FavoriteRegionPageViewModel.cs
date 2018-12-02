@@ -22,6 +22,8 @@ namespace TP2.ViewModels
             FavoriteRegionList = new ObservableCollection<Region>(favoriteRegionListService.GetFavoriteRegionList(authentificationService.AuthenticatedUserName));
         }
 
+        public DelegateCommand<Region> WeatherRegionPageCommand => new DelegateCommand<Region>(WeatherRegionPage);
+
         public ObservableCollection<Region> FavoriteRegionList
         {
             get => _favoriteRegionList;
@@ -30,6 +32,15 @@ namespace TP2.ViewModels
                 _favoriteRegionList = value;
                 RaisePropertyChanged();
             }
+        }
+
+        private async void WeatherRegionPage(Region region)
+        {
+            var navigationParameter = new NavigationParameters
+                    {
+                        { "region", region.Name }
+                    };
+            await _navigationService.NavigateAsync(nameof(WeatherPage), navigationParameter);
         }
     }
 }

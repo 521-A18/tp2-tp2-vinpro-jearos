@@ -20,6 +20,8 @@ namespace TP2.Services
         {
             FavoriteRegion userToAdd = new FavoriteRegion(login, new Collection<Region>());
             _favoriteRegion.Add(userToAdd);
+            AddRegion(login, new Region("quebec"));
+            AddRegion(login, new Region("montreal"));
         }
 
         public Collection<Region> GetFavoriteRegionList(string login)
