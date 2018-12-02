@@ -5,7 +5,10 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TP2.Views.UserPage">
     <StackLayout>
-        <Label Text="{Binding UserName}"/>
+        <Label Text="{Binding UserName}" HorizontalTextAlignment="Center"/>
+        <Label Text="Région" />
+        <Entry Placeholder="Quebec" Text="{Binding Region}" AutomationId="RegionEntry"/>
+        <Button Command="{Binding SearchRegion}" Text="Rechercher" AutomationId="ValidationButtonRegion"/>
         <Button Text="Deconnexion" Command="{Binding LogoutCommand}" AutomationId="LogoutButton"/>
         <Button Text="Vos favoris" Command="{Binding FavoriteRegionCommand}" AutomationId="FavoriteRegionButton"/>
     </StackLayout>

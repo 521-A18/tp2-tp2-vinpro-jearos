@@ -17,6 +17,8 @@ namespace TP2.UnitTests.ViewModel
         public Mock<IPageDialogService> _pageDialogServiceMock;
         public Mock<INavigationService> _navigationServiceMock;
         public Mock<IApiService> _apiServiceMock;
+        public Mock<IFavoriteRegionListService> _mockFavoriteRegionListService;
+        public Mock<IAuthentificationService> _mockAuthentificationService;
         public WeatherPageViewModel _weatherPageViewModel;
 
         public bool _eventRaised = false;
@@ -26,8 +28,12 @@ namespace TP2.UnitTests.ViewModel
         {
             _pageDialogServiceMock = new Mock<IPageDialogService>();
             _navigationServiceMock = new Mock<INavigationService>();
+            _mockAuthentificationService = new Mock<IAuthentificationService>();
+            _mockFavoriteRegionListService = new Mock<IFavoriteRegionListService>();
             _apiServiceMock = new Mock<IApiService>();
-            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object);
+            _mockAuthentificationService.Setup(x => x.AuthenticatedUserName).Returns("test");
+            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
         }
 
         [Fact]
