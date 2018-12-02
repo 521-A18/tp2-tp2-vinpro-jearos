@@ -93,6 +93,7 @@ namespace TP2.ViewModels
             {
                 _favoriteRegionListService.AddRegion(_userName, new Region(_region));
                 await _navigationService.NavigateAsync(nameof(FavoriteRegionPage));
+                await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.REGION_ADDED, UiText.OK);
             }
         }
     }

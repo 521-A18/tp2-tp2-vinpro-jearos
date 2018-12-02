@@ -6,6 +6,7 @@ using Prism.Services;
 using TP2.Externalization;
 using TP2.Services.Interfaces;
 using TP2.ViewModels;
+using TP2.Views;
 using Xunit;
 using static TP2.Models.WeatherCondition;
 
@@ -32,7 +33,6 @@ namespace TP2.UnitTests.ViewModel
             _mockFavoriteRegionListService = new Mock<IFavoriteRegionListService>();
             _apiServiceMock = new Mock<IApiService>();
             _mockAuthentificationService.Setup(x => x.AuthenticatedUserName).Returns("test");
-            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
             _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
         }
 
@@ -83,6 +83,36 @@ namespace TP2.UnitTests.ViewModel
 
             _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.WRONG_REGION, UiText.OK));
         }
+
+        //[Fact]
+        //public void AddRegion_WhenWhenUserIsNotConnected_ShouldDisplayAlert()
+        //{
+        //    _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+
+        //    _weatherPageViewModel.putInFavorite.Execute();
+
+        //    _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.NEED_TO_BE_CONNECTED, UiText.OK));
+        //}
+
+        //[Fact]
+        //public void AddRegion_WhenWhenUserIsConnected_ShouldDisplayAlert()
+        //{
+        //    _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+
+        //    _weatherPageViewModel.putInFavorite.Execute();
+
+        //    _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.REGION_ADDED, UiText.OK));
+        //}
+
+        //[Fact]
+        //public void AddRegion_WhenWhenUserIsConnected_ShouldNavigate()
+        //{
+        //    _mockAuthentificationService.SetupProperty(x => x.IsUserAuthenticated, true);
+
+        //    _weatherPageViewModel.putInFavorite.Execute();
+
+        //    _navigationServiceMock.Verify(x => x.NavigateAsync(It.Is<string>(s => s.Contains(nameof(WeatherPage)))), Times.AtLeastOnce());
+        //}
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)
         {

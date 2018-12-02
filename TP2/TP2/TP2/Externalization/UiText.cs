@@ -16,5 +16,6 @@
         public const string ELEMENT_ARE_INVALIDE = "Les éléments entrés ne sont pas valide.";
         public const string EMAIL_ALREADY_EXIST = "Le courriel existe déjà.";
         public const string NEED_TO_BE_CONNECTED = "Vous devez être connecté pour mettre une région en favorie.";
+        public const string REGION_ADDED = "La région à été ajouté à votre liste de favorie.";
     }
 }
