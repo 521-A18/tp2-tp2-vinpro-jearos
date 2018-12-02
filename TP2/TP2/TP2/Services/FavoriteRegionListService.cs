@@ -9,7 +9,7 @@ namespace TP2.Services
 {
     public class FavoriteRegionListService : IFavoriteRegionListService
     {
-        private Collection<FavoriteRegion>  _favoriteRegion;
+        public Collection<FavoriteRegion>  _favoriteRegion;
 
         public FavoriteRegionListService()
         {
@@ -19,10 +19,6 @@ namespace TP2.Services
         public void AddUserFavoriteList(string login)
         {
             FavoriteRegion userToAdd = new FavoriteRegion(login, new Collection<Region>());
-            Region region1 = new Region("quebec");
-            Region region2 = new Region("montreal");
-            userToAdd.FavoriteRegionList.Add(region1);
-            userToAdd.FavoriteRegionList.Add(region2);
             _favoriteRegion.Add(userToAdd);
         }
 
@@ -34,6 +30,22 @@ namespace TP2.Services
             }
 
             return null;
+        }
+
+        public void AddRegion(string login, Region region)
+        {
+            foreach (FavoriteRegion element in _favoriteRegion)
+            {
+                if (element.Login == login) element.FavoriteRegionList.Add(region);
+            }
+        }
+
+        public void RemoveRegion(string login, Region region)
+        {
+            foreach (FavoriteRegion element in _favoriteRegion)
+            {
+                if (element.Login == login) element.FavoriteRegionList.Remove(region);
+            }
         }
     }
 }
