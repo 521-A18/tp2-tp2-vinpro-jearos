@@ -6,6 +6,7 @@ using Prism.Services;
 using TP2.Externalization;
 using TP2.Services.Interfaces;
 using TP2.ViewModels;
+using TP2.Views;
 using Xunit;
 using static TP2.Models.WeatherCondition;
 
@@ -22,6 +23,7 @@ namespace TP2.UnitTests.ViewModel
         public WeatherPageViewModel _weatherPageViewModel;
 
         public bool _eventRaised = false;
+        public bool _isConnected = true;
         public RootObject _rootObject;
 
         public WeatherPageViewModelTest()
@@ -31,8 +33,6 @@ namespace TP2.UnitTests.ViewModel
             _mockAuthentificationService = new Mock<IAuthentificationService>();
             _mockFavoriteRegionListService = new Mock<IFavoriteRegionListService>();
             _apiServiceMock = new Mock<IApiService>();
-            _mockAuthentificationService.Setup(x => x.AuthenticatedUserName).Returns("test");
-            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
             _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
         }
 
@@ -82,6 +82,39 @@ namespace TP2.UnitTests.ViewModel
             _weatherPageViewModel.GetResponse();
 
             _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.WRONG_REGION, UiText.OK));
+        }
+
+        [Fact]
+        public void AddRegion_WhenWhenUserIsNotConnected_ShouldDisplayAlert()
+        {
+            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(false);
+            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
+
+            _weatherPageViewModel.putInFavorite.Execute();
+
+           _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.NEED_TO_BE_CONNECTED, UiText.OK));
+        }
+
+        [Fact]
+        public void AddRegion_WhenWhenUserIsConnected_ShouldDisplayAlert()
+        {
+            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
+
+            _weatherPageViewModel.putInFavorite.Execute();
+
+            _pageDialogServiceMock.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.REGION_ADDED, UiText.OK));
+        }
+
+        [Fact]
+        public void AddRegion_WhenWhenUserIsConnected_ShouldNavigate()
+        {
+            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
+            _weatherPageViewModel = new WeatherPageViewModel(_navigationServiceMock.Object, _pageDialogServiceMock.Object, _apiServiceMock.Object, _mockAuthentificationService.Object, _mockFavoriteRegionListService.Object);
+
+            _weatherPageViewModel.putInFavorite.Execute();
+
+            _navigationServiceMock.Verify(x => x.NavigateAsync(nameof(FavoriteRegionPage)), Times.AtLeastOnce);
         }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)

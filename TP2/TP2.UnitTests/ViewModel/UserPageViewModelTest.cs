@@ -23,8 +23,6 @@ namespace TP2.UnitTests.ViewModel
             _mockNavigationService = new Mock<INavigationService>();
             _mockAuthentificationService = new Mock<IAuthentificationService>();
             _mockPageDialogService = new Mock<IPageDialogService>();
-            _mockAuthentificationService.Setup(x => x.AuthenticatedUserName).Returns("test");
-            _mockAuthentificationService.Setup(x => x.IsUserAuthenticated).Returns(true);
             _userPageViewModel = new UserPageViewModel(_mockNavigationService.Object, _mockAuthentificationService.Object, _mockPageDialogService.Object);
         }
 
