@@ -7,8 +7,8 @@
     <StackLayout>
         <Label Text="{Binding UserName}" HorizontalTextAlignment="Center"/>
         <Label Text="Région" />
-        <Entry Placeholder="Quebec" Text="{Binding Region}" AutomationId="RegionEntry"/>
-        <Button Command="{Binding SearchRegion}" Text="Rechercher" AutomationId="ValidationButtonRegion"/>
+        <Entry Placeholder="Quebec" Text="{Binding Region}" AutomationId="RegionFavoriteEntry"/>
+        <Button Command="{Binding SearchRegion}" Text="Rechercher" AutomationId="ValidationButtonRegionFavorite"/>
         <Button Text="Deconnexion" Command="{Binding LogoutCommand}" AutomationId="LogoutButton"/>
         <Button Text="Vos favoris" Command="{Binding FavoriteRegionCommand}" AutomationId="FavoriteRegionButton"/>
     </StackLayout>

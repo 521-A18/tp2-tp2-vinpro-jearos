@@ -8,7 +8,7 @@
     <StackLayout>
         <Label Text="Page des regions favorites"/>
         <ListView SeparatorVisibility="None"
-              ItemsSource="{Binding FavoriteRegionList}">
+              ItemsSource="{Binding FavoriteRegionList}" AutomationId="FavoriteRegion">
             <ListView.Behaviors>
                 <b:EventToCommandBehavior EventName="ItemTapped" 
                                           Command="{Binding WeatherRegionPageCommand}"

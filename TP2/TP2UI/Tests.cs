@@ -78,5 +78,30 @@ namespace TP2UI
             var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des regions favorites");
             Assert.IsTrue(NameDisplayed);
         }
+
+        [Test]
+        public void FavoriteRegionPage_AddRegionIsWorking_DisplayFavoriteRegionPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitLogin("123", "456");
+            weatherPageObject.SubmitFavoriteRegion("quebec");
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des regions favorites");
+            Assert.IsTrue(NameDisplayed);
+        }
+
+        [Test]
+        public void FavoriteRegionPage_FavoriteRegionDetailsIsWorking_DisplayWeatherPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitLogin("123", "456");
+            weatherPageObject.SubmitFavoriteRegion("quebec");
+            weatherPageObject.FavoriteRegion();
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Quebec");
+            Assert.IsTrue(NameDisplayed);
+        }
     }
 }
