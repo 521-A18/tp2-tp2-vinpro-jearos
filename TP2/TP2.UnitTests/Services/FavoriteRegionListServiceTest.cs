@@ -66,5 +66,32 @@ namespace TP2.UnitTests.Services
 
             Assert.Empty(regionList);
         }
+
+        [Fact]
+        public void CheckRegionInList_WhenRegionIsInList_ShouldReturnTrue()
+        {
+            _favoriteRegionListService.AddUserFavoriteList(ConstanteTest.GOOD_EMAIL);
+            Region regionToRemove = new Region("quebec");
+            _favoriteRegionListService.AddRegion(ConstanteTest.GOOD_EMAIL, regionToRemove);
+
+            Assert.True(_favoriteRegionListService.CheckRegionInList(ConstanteTest.GOOD_EMAIL, regionToRemove));
+        }
+
+        [Fact]
+        public void CheckRegionInList_WhenRegionIsNotInList_ShouldReturnFalse()
+        {
+            _favoriteRegionListService.AddUserFavoriteList(ConstanteTest.GOOD_EMAIL);
+            Region regionToRemove = new Region("quebec");
+
+            Assert.False(_favoriteRegionListService.CheckRegionInList(ConstanteTest.GOOD_EMAIL, regionToRemove));
+        }
+
+        [Fact]
+        public void CheckRegionInList_WhenUserIsNotInList_ShouldReturnFalse()
+        {
+            Region regionToRemove = new Region("quebec");
+
+            Assert.False(_favoriteRegionListService.CheckRegionInList(ConstanteTest.GOOD_EMAIL, regionToRemove));
+        }
     }
 }

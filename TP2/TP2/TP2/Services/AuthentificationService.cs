@@ -23,6 +23,11 @@ namespace TP2.Services
 
         public string AuthenticatedUserName { get; private set; }
 
+        public void LogOut()
+        {
+            IsUserAuthenticated = false;
+        }
+
         public void LogIn(string login, string password)
         {
             try

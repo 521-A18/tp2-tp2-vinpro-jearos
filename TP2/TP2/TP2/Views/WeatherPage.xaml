@@ -10,6 +10,6 @@
         <Label Text="{Binding WeatherCondition.location.name}" />
         <Label Text="{Binding WeatherCondition.current.temp_c}" />
         <Label Text="{Binding WeatherCondition.current.feelslike_c}" />
-        <Button Image="etoile1.png" BackgroundColor="Transparent" Command="{Binding putInFavorite}" AutomationId="WeatherPageFavoriteButton"/>
+        <Button Image="{Binding Image}" BackgroundColor="Transparent" Command="{Binding FavoriteCommand}" AutomationId="WeatherPageFavoriteButton"/>
     </StackLayout>
 </ContentPage>

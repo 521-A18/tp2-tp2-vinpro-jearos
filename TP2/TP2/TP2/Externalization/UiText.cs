@@ -16,6 +16,9 @@
         public const string ELEMENT_ARE_INVALIDE = "Les éléments entrés ne sont pas valide.";
         public const string EMAIL_ALREADY_EXIST = "Le courriel existe déjà.";
         public const string NEED_TO_BE_CONNECTED = "Vous devez être connecté pour mettre une région en favorie.";
-        public const string REGION_ADDED = "La région à été ajouté à votre liste de favorie.";
+        public const string REGION_ADDED = "La région a été ajouté à votre liste de favorie.";
+        public const string REGION_REMOVED = "La région a été retirer de votre liste de favorie.";
+        public const string ALREADY_FAVORITE = "La région est déjà dans la liste de favorie.";
+        public const string NOT_FAVORITE = "La région n'est pas dans la liste de favorie.";
     }
 }

@@ -14,15 +14,19 @@ namespace TP2.ViewModels
 	public class FavoriteRegionPageViewModel : ViewModelBase
     {
         private INavigationService _navigationService;
+        private IFavoriteRegionListService _favoriteRegionListService;
+        private IAuthentificationService _authentificationService;
         private ObservableCollection<Region> _favoriteRegionList;
         public FavoriteRegionPageViewModel(INavigationService navigationService, IFavoriteRegionListService favoriteRegionListService, IAuthentificationService authentificationService)
             : base(navigationService)
         {
             _navigationService = navigationService;
-            FavoriteRegionList = new ObservableCollection<Region>(favoriteRegionListService.GetFavoriteRegionList(authentificationService.AuthenticatedUserName));
+            _favoriteRegionListService = favoriteRegionListService;
+            _authentificationService = authentificationService;
         }
 
         public DelegateCommand<Region> WeatherRegionPageCommand => new DelegateCommand<Region>(WeatherRegionPage);
+        public DelegateCommand GoBackCommand => new DelegateCommand(GoBack);
 
         public ObservableCollection<Region> FavoriteRegionList
         {
@@ -32,6 +36,16 @@ namespace TP2.ViewModels
                 _favoriteRegionList = value;
                 RaisePropertyChanged();
             }
+        }
+
+        public override void OnNavigatingTo(INavigationParameters param)
+        {
+            FavoriteRegionList = new ObservableCollection<Region>(_favoriteRegionListService.GetFavoriteRegionList(_authentificationService.AuthenticatedUserName));
+        }
+
+        private async void GoBack()
+        {
+            await _navigationService.GoBackAsync();
         }
 
         private async void WeatherRegionPage(Region region)
