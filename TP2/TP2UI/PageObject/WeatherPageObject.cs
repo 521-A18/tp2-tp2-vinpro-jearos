@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TP2.Externalization;
 using TP2UI.Helpers;
 using Xamarin.UITest;
 
@@ -13,7 +14,10 @@ namespace TP2UI.PageObject
         const string REGISTER_BUTTON = "RegisterButton";
         const string LOGOUT_BUTTON = "LogoutButton";
         const string FAVORITEREGION_BUTTON = "FavoriteRegionButton";
+        const string WEATHERPAGEFAVORITE_BUTTON = "WeatherPageFavoriteButton";
+        const string FAVORITE_REGION = "FavoriteRegion";
         const string REGION_ENTRY = "RegionEntry";
+        const string REGIONFAVORITE_ENTRY = "RegionFavoriteEntry";
         const string EMAILREGISTER_ENTRY = "EmailRegisterEntry";
         const string PASSWORDREGISTER_ENTRY = "PasswordRegisterEntry";
         const string CONFIRMPASSWORDREGISTER_ENTRY = "ConfirmPasswordRegisterEntry";
@@ -22,6 +26,7 @@ namespace TP2UI.PageObject
         const string VALIDATION_BUTTON_REGION = "ValidationButtonRegion";
         const string VALIDATION_BUTTON_REGISTER = "ValidationButtonRegister";
         const string VALIDATION_BUTTON_LOGIN = "ValidationButtonLogin";
+        const string VALIDATION_BUTTON_REGIONFAVORITE = "ValidationButtonRegionFavorite";
 
         public WeatherPageObject(IApp app) : base(app)
         {
@@ -49,6 +54,26 @@ namespace TP2UI.PageObject
             App.EnterText(REGION_ENTRY, region.ToString());
             App.Back();
             App.Tap(VALIDATION_BUTTON_REGION);
+        }
+
+        public void SubmitFavoriteRegion(string region)
+        {
+            App.WaitForElement(REGIONFAVORITE_ENTRY);
+            App.EnterText(REGIONFAVORITE_ENTRY, region.ToString());
+            App.Back();
+            App.Tap(VALIDATION_BUTTON_REGIONFAVORITE);
+            App.Tap(WEATHERPAGEFAVORITE_BUTTON);
+            App.Tap(UiText.OK);
+        }
+
+        public void FavoriteRegion()
+        {
+            App.Tap(FAVORITE_REGION);
+        }
+
+        public void RemoveRegion()
+        {
+            App.Tap(WEATHERPAGEFAVORITE_BUTTON);
         }
 
         public void SubmitLogin(string email, string password)

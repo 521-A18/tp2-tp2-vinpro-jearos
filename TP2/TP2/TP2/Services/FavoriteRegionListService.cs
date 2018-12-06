@@ -42,10 +42,41 @@ namespace TP2.Services
 
         public void RemoveRegion(string login, Region region)
         {
+            Collection<Region> userList = null;
+            int regionToRemove = 0;
             foreach (FavoriteRegion element in _favoriteRegion)
             {
-                if (element.Login == login) element.FavoriteRegionList.Remove(region);
+                if (element.Login == login) userList = element.FavoriteRegionList;
             }
+
+            foreach (Region element in userList)
+            {
+                if (element.Name == region.Name) regionToRemove = userList.IndexOf(element);
+            }
+
+            userList.RemoveAt(regionToRemove);
+        }
+
+        public bool CheckRegionInList(string login, Region region)
+        {
+            Collection<Region> userList = null;
+            foreach (FavoriteRegion element in _favoriteRegion)
+            {
+                if (element.Login == login) userList = element.FavoriteRegionList;
+            }
+            if(userList == null)
+            {
+                return false;
+            }
+            else
+            {
+                foreach (Region element in userList)
+                {
+                    if (element.Name == region.Name) return true;
+                }
+            }
+
+            return false;
         }
     }
 }

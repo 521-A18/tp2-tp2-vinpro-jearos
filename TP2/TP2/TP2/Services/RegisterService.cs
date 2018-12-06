@@ -25,7 +25,7 @@ namespace TP2.Services
             _favoriteRegionListService = favoriteRegionListService;
         }
 
-        public void RegisterUser(string email, string password)
+        public async void RegisterUser(string email, string password)
         {
             string salt = _cryptoService.GenerateSalt();
             List<User> userList = new List<User>();
@@ -41,9 +41,9 @@ namespace TP2.Services
                 };
                 _favoriteRegionListService.AddUserFavoriteList(newUser.Login);
                 _repository.Add(newUser);
-                _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == email).Id.ToString(), _cryptoService.GenerateEncryptionKey());
+                await _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == email).Id.ToString(), _cryptoService.GenerateEncryptionKey());
             }
-            else _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.EMAIL_ALREADY_EXIST, UiText.OK);
+            else await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.EMAIL_ALREADY_EXIST, UiText.OK);
         }
 
         public bool CheckUser(string email, List<User> list)

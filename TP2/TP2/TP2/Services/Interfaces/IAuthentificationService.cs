@@ -10,5 +10,6 @@ namespace TP2.Services.Interfaces
         int AuthenticatedUserId { get; }
         string AuthenticatedUserName { get; }
         void LogIn(string login, string password);
+        void LogOut();
     }
 }

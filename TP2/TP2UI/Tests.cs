@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using TP2.Externalization;
 using TP2UI.PageObject;
 using Xamarin.UITest;
 using Xamarin.UITest.Android;
@@ -76,6 +77,47 @@ namespace TP2UI
             weatherPageObject.FavoriteRegionPage();
 
             var NameDisplayed = weatherPageObject.IsNameDisplayed("Page des regions favorites");
+            Assert.IsTrue(NameDisplayed);
+        }
+
+        [Test]
+        public void FavoriteRegionPage_AddRegionIsWorking_DisplayUserPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitLogin("123", "456");
+            weatherPageObject.SubmitFavoriteRegion("quebec");
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("123");
+            Assert.IsTrue(NameDisplayed);
+        }
+
+        [Test]
+        public void FavoriteRegionPage_FavoriteRegionDetailsIsWorking_DisplayWeatherPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitLogin("123", "456");
+            weatherPageObject.SubmitFavoriteRegion("quebec");
+            weatherPageObject.FavoriteRegionPage();
+            weatherPageObject.FavoriteRegion();
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("Quebec");
+            Assert.IsTrue(NameDisplayed);
+        }
+
+        [Test]
+        public void FavoriteRegionPage_RemoveRegionIsWorking_DisplayFavoriteRegionPage()
+        {
+            var weatherPageObject = new WeatherPageObject(app);
+
+            weatherPageObject.SubmitLogin("123", "456");
+            weatherPageObject.SubmitFavoriteRegion("quebec");
+            weatherPageObject.FavoriteRegionPage();
+            weatherPageObject.FavoriteRegion();
+            weatherPageObject.RemoveRegion();
+
+            var NameDisplayed = weatherPageObject.IsNameDisplayed(UiText.REGION_REMOVED);
             Assert.IsTrue(NameDisplayed);
         }
     }

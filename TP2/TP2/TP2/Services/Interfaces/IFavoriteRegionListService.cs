@@ -9,5 +9,6 @@ namespace TP2.Services.Interfaces
         Collection<Region> GetFavoriteRegionList(string login);
         void AddRegion(string login, Region region);
         void RemoveRegion(string login, Region region);
+        bool CheckRegionInList(string login, Region region);
     }
 }

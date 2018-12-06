@@ -55,6 +55,7 @@ namespace TP2.ViewModels
 
         private async void Logout()
         {
+            _authentificationService.LogOut();
             await _navigationService.GoBackToRootAsync();
         }
 

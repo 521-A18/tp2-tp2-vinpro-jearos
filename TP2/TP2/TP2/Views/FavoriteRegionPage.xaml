@@ -2,17 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TP2.Views.FavoriteRegionPage">
     <StackLayout>
         <Label Text="Page des regions favorites"/>
+        <Button Text="Retour" Command="{Binding GoBackCommand}" />
         <ListView SeparatorVisibility="None"
               ItemsSource="{Binding FavoriteRegionList}">
+            <ListView.Behaviors>
+                <b:EventToCommandBehavior EventName="ItemTapped" 
+                                          Command="{Binding WeatherRegionPageCommand}"
+                                          EventArgsParameterPath="Item" />
+            </ListView.Behaviors>
             <ListView.RowHeight>
                 <OnPlatform x:TypeArguments="x:Int32"
                         iOS="80"
-                        Android="80"
-                        WinPhone="90" />
+                        Android="80" />
             </ListView.RowHeight>
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -22,7 +28,7 @@
                                Padding="10">
                                 <StackLayout Orientation="Horizontal">
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Name}"></Label>
+                                        <Label Text="{Binding Name}" AutomationId="FavoriteRegion"></Label>
                                      </StackLayout>
                                 </StackLayout>
                             </Frame>
