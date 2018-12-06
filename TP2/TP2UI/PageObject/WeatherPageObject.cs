@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TP2.Externalization;
 using TP2UI.Helpers;
 using Xamarin.UITest;
 
@@ -62,11 +63,17 @@ namespace TP2UI.PageObject
             App.Back();
             App.Tap(VALIDATION_BUTTON_REGIONFAVORITE);
             App.Tap(WEATHERPAGEFAVORITE_BUTTON);
+            App.Tap(UiText.OK);
         }
 
         public void FavoriteRegion()
         {
             App.Tap(FAVORITE_REGION);
+        }
+
+        public void RemoveRegion()
+        {
+            App.Tap(WEATHERPAGEFAVORITE_BUTTON);
         }
 
         public void SubmitLogin(string email, string password)

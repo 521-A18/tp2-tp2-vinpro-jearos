@@ -9,7 +9,7 @@
         <Label Text="Page des regions favorites"/>
         <Button Text="Retour" Command="{Binding GoBackCommand}" />
         <ListView SeparatorVisibility="None"
-              ItemsSource="{Binding FavoriteRegionList}" AutomationId="FavoriteRegion">
+              ItemsSource="{Binding FavoriteRegionList}">
             <ListView.Behaviors>
                 <b:EventToCommandBehavior EventName="ItemTapped" 
                                           Command="{Binding WeatherRegionPageCommand}"
@@ -28,7 +28,7 @@
                                Padding="10">
                                 <StackLayout Orientation="Horizontal">
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Name}"></Label>
+                                        <Label Text="{Binding Name}" AutomationId="FavoriteRegion"></Label>
                                      </StackLayout>
                                 </StackLayout>
                             </Frame>
