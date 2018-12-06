@@ -52,17 +52,5 @@ namespace TP2.UnitTests.Services
 
             _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.EMAIL_ALREADY_EXIST, UiText.OK), Times.AtLeastOnce);
         }
-
-        //[Fact]
-        //private void RegisterUser_WhenNewUserIsValid_ShouldAddUser()
-        //{
-        //    int itemInListBefore = _list.Count;
-
-        //    _registerService.RegisterUser("1234", "456");
-
-        //    int itemInListAfter = _list.Count;
-
-        //    Assert.Equal(itemInListBefore + 1, itemInListAfter);
-        //}
     }
 }
