@@ -148,8 +148,8 @@ namespace TP2.ViewModels
             else
             {
                 _favoriteRegionListService.AddRegion(_userName, new Region(_region));
-                await _navigationService.GoBackAsync();
                 await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.REGION_ADDED, UiText.OK);
+                await _navigationService.NavigateAsync("/NavigationPage/FavoriteRegionPage");
             }
         }
 
@@ -160,8 +160,8 @@ namespace TP2.ViewModels
             {
                 _favoriteRegionListService.CheckRegionInList(_userName, new Region(_region));
                 _favoriteRegionListService.RemoveRegion(_userName, new Region(_region));
-                await _navigationService.GoBackAsync();
                 await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.REGION_REMOVED, UiText.OK);
+                await _navigationService.NavigateAsync("/NavigationPage/FavoriteRegionPage");
             }
         }
     }

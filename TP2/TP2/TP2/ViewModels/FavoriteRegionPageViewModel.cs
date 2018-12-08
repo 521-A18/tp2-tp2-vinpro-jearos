@@ -45,7 +45,7 @@ namespace TP2.ViewModels
 
         private async void GoBack()
         {
-            await _navigationService.GoBackAsync();
+            await _navigationService.NavigateAsync("UserPage");
         }
 
         private async void WeatherRegionPage(Region region)

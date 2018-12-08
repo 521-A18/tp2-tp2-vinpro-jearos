@@ -56,12 +56,12 @@ namespace TP2.ViewModels
         private async void Logout()
         {
             _authentificationService.LogOut();
-            await _navigationService.GoBackToRootAsync();
+            await _navigationService.NavigateAsync("/NavigationPage/MainPage");
         }
 
         private async void FavoriteRegion()
         {
-            await _navigationService.NavigateAsync(nameof(FavoriteRegionPage));
+            await _navigationService.NavigateAsync("FavoriteRegionPage");
         }
 
         private async void Search()

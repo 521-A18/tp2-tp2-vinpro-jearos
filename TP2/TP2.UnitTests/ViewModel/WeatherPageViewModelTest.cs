@@ -160,7 +160,7 @@ namespace TP2.UnitTests.ViewModel
 
             _weatherPageViewModel.FavoriteCommand.Execute();
 
-            _navigationServiceMock.Verify(x => x.GoBackAsync(), Times.AtLeastOnce);
+            _navigationServiceMock.Verify(x => x.NavigateAsync("/NavigationPage/FavoriteRegionPage"), Times.AtLeastOnce);
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace TP2.UnitTests.ViewModel
 
             _weatherPageViewModel.FavoriteCommand.Execute();
 
-            _navigationServiceMock.Verify(x => x.GoBackAsync(), Times.AtLeastOnce);
+            _navigationServiceMock.Verify(x => x.NavigateAsync("/NavigationPage/FavoriteRegionPage"), Times.AtLeastOnce);
         }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)

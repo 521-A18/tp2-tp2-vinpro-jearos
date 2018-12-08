@@ -65,5 +65,15 @@ namespace TP2.UnitTests.Services
             _authentificationService.LogIn(userToTest, passwordToTest);
             Assert.False(_authentificationService.IsUserAuthenticated);
         }
+
+        [Fact]
+        public void LogOut_WhenUserNameLogOut_ShouldChangeIsUserAuthenticatedToFalse()
+        {
+            string userToTest = "123";
+            string passwordToTest = "password";
+            _authentificationService.LogIn(userToTest, passwordToTest);
+            _authentificationService.LogOut();
+            Assert.False(_authentificationService.IsUserAuthenticated);
+        }
     }
 }

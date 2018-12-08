@@ -25,6 +25,7 @@ namespace TP2.UnitTests.ViewModel
         private ICryptoService _cryptoService;
         private Mock<ISecureStorageService> _mockSecureStorageService;
         private Mock<IRegisterService> _mockRegisterService;
+        private Mock<IAuthentificationService> _mockAuthentificationService;
 
         private bool _eventRaised = false;
 
@@ -36,8 +37,9 @@ namespace TP2.UnitTests.ViewModel
             _mockRepository = new Mock<IRepository<User>>();
             _mockSecureStorageService = new Mock<ISecureStorageService>();
             _mockRegisterService = new Mock<IRegisterService>();
+            _mockAuthentificationService = new Mock<IAuthentificationService>();
 
-            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object, _cryptoService, _mockRepository.Object, _mockSecureStorageService.Object, _mockRegisterService.Object);
+            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object, _cryptoService, _mockRepository.Object, _mockSecureStorageService.Object, _mockRegisterService.Object, _mockAuthentificationService.Object);
         }
 
         [Fact]
@@ -156,10 +158,24 @@ namespace TP2.UnitTests.ViewModel
             _registerPageViewModels.Email.Value = ConstanteTest.BAD_EMAIL;
             _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
             _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD;
+            _mockRegisterService.Setup(x => x.CheckUser(ConstanteTest.BAD_EMAIL)).Returns(false);
 
             _registerPageViewModels.ExecuteUserPage.Execute();
 
             _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.ELEMENT_ARE_INVALIDE, UiText.OK), Times.AtLeastOnce());
+        }
+
+        [Fact]
+        public void UserPageNavigation_WhenEmailIsInList_ShouldDisplayAlert()
+        {
+            _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
+            _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD;
+            _mockRegisterService.Setup(x => x.CheckUser(ConstanteTest.GOOD_EMAIL)).Returns(true);
+
+            _registerPageViewModels.ExecuteUserPage.Execute();
+
+            _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.EMAIL_ALREADY_EXIST, UiText.OK), Times.AtLeastOnce());
         }
 
         [Fact]
@@ -180,12 +196,25 @@ namespace TP2.UnitTests.ViewModel
             _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
             _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
             _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD_CONFIRM;
+            _mockRegisterService.Setup(x => x.CheckUser(ConstanteTest.GOOD_EMAIL)).Returns(false);
 
-            _mockNavigationService.Setup(x => x.NavigateAsync(It.Is<string>(s => s.Contains(nameof(MainPage))))).Throws(new Exception());
+            _mockNavigationService.Setup(x => x.NavigateAsync(It.Is<string>(s => s.Contains(nameof(UserPage))))).Throws(new Exception());
 
             _registerPageViewModels.ExecuteUserPage.Execute();
 
             _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.ALERT_ERROR, UiText.OK), Times.AtLeastOnce());
+        }
+
+        [Fact]
+        public void UserPageNavigation_WhenEmailAndPasswordAndConfirmAreValid_ShouldNavigate()
+        {
+            _registerPageViewModels.Email.Value = ConstanteTest.GOOD_EMAIL;
+            _registerPageViewModels.Password.Value = ConstanteTest.GOOD_PASSWORD;
+            _registerPageViewModels.PasswordConfirm.Value = ConstanteTest.GOOD_PASSWORD_CONFIRM;
+        
+            _registerPageViewModels.ExecuteUserPage.Execute();
+        
+            _mockNavigationService.Verify(x => x.NavigateAsync("/NavigationPage/UserPage"), Times.AtLeastOnce);
         }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)

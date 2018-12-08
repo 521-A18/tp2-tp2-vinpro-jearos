@@ -47,14 +47,6 @@ namespace TP2.UnitTests.Services
         }
 
         [Fact]
-        private void RegisterUser_WhenNewUserHasSameEmail_ShouldDisplayAlert()
-        {
-            _registerService.RegisterUser("123", "456");
-
-            _mockPageDialogService.Verify(x => x.DisplayAlertAsync(UiText.ALERT, UiText.EMAIL_ALREADY_EXIST, UiText.OK), Times.AtLeastOnce);
-        }
-
-        [Fact]
         private void RegisterUser_WhenNewUserHasDiffrentEmail_ShouldAdd()
         {
              User userTest = new User()
@@ -66,10 +58,33 @@ namespace TP2.UnitTests.Services
             List<User> listWithNewUser = new List<User>();
             listWithNewUser.Add(user);
             listWithNewUser.Add(userTest);
-            _mockRepository.SetupSequence(x => x.GetAll()).Returns(_list).Returns(listWithNewUser);
+            _mockRepository.Setup(x => x.GetAll()).Returns(listWithNewUser);
             _registerService.RegisterUser("1234", "456");
 
             _mockPageDialogService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        private void CheckUser_WhenUserIsInList_ShouldReturnTrue()
+        {
+            User userTest = new User()
+            {
+                Login = "1234",
+                HashedPassword = "456",
+                PasswordSalt = "salty"
+            };
+            List<User> listWithNewUser = new List<User>();
+            listWithNewUser.Add(user);
+            listWithNewUser.Add(userTest);
+            _mockRepository.Setup(x => x.GetAll()).Returns(listWithNewUser);
+
+            Assert.True(_registerService.CheckUser("1234"));
+        }
+
+        [Fact]
+        private void CheckUser_WhenUserIsNotInList_ShouldReturnFalse()
+        {
+            Assert.False(_registerService.CheckUser("1234"));
         }
     }
 }

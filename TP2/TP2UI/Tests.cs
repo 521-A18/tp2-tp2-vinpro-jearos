@@ -19,7 +19,7 @@ namespace TP2UI
         public void BeforeEachTest()
         {
             app = ConfigureApp.Android
-                .ApkFile(@"c:\temp\com.companyname.appname-Signed.apk")
+                .ApkFile(@"../../../TP2/TP2.Android/bin/Release/com.companyname.appname.apk")
                 .StartApp();
         }
 
@@ -41,7 +41,7 @@ namespace TP2UI
 
             weatherPageObject.SubmitRegister("exemple@gmail.com", "Testtest12");
 
-            var NameDisplayed = weatherPageObject.IsNameDisplayed("Courriel :");
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("exemple@gmail.com");
             Assert.IsTrue(NameDisplayed);
         }
 
@@ -88,7 +88,7 @@ namespace TP2UI
             weatherPageObject.SubmitLogin("123", "456");
             weatherPageObject.SubmitFavoriteRegion("quebec");
 
-            var NameDisplayed = weatherPageObject.IsNameDisplayed("123");
+            var NameDisplayed = weatherPageObject.IsNameDisplayed("quebec");
             Assert.IsTrue(NameDisplayed);
         }
 
@@ -99,7 +99,6 @@ namespace TP2UI
 
             weatherPageObject.SubmitLogin("123", "456");
             weatherPageObject.SubmitFavoriteRegion("quebec");
-            weatherPageObject.FavoriteRegionPage();
             weatherPageObject.FavoriteRegion();
 
             var NameDisplayed = weatherPageObject.IsNameDisplayed("Quebec");
@@ -113,7 +112,6 @@ namespace TP2UI
 
             weatherPageObject.SubmitLogin("123", "456");
             weatherPageObject.SubmitFavoriteRegion("quebec");
-            weatherPageObject.FavoriteRegionPage();
             weatherPageObject.FavoriteRegion();
             weatherPageObject.RemoveRegion();
 

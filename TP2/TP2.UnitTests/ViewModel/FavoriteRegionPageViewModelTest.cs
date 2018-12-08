@@ -8,6 +8,7 @@ using System.Text;
 using TP2.Models.Entities;
 using TP2.Services.Interfaces;
 using TP2.ViewModels;
+using TP2.Views;
 using Xunit;
 
 namespace TP2.UnitTests.ViewModel
@@ -39,6 +40,27 @@ namespace TP2.UnitTests.ViewModel
             _favoriteRegionPageViewModel.FavoriteRegionList = new ObservableCollection<Region>(new Collection<Region>());
 
             Assert.True(_eventRaised);
+        }
+
+        [Fact]
+        public void WeatherRegionPage_WhenUserGoToWeatherPage_ShouldNavigate()
+        {
+            Region regionToTest = new Region("quebec");
+            var navigationParameter = new NavigationParameters
+            {
+                { "region", "quebec" }
+            };
+            _favoriteRegionPageViewModel.WeatherRegionPageCommand.Execute(regionToTest);
+
+            _mockNavigationService.Verify(x => x.NavigateAsync(nameof(WeatherPage), navigationParameter), Times.Once);
+        }
+
+        [Fact]
+        public void GoBack_WhenUserGoBack_ShouldNavigate()
+        {
+            _favoriteRegionPageViewModel.GoBackCommand.Execute();
+
+            _mockNavigationService.Verify(x => x.NavigateAsync("UserPage"), Times.Once);
         }
 
         private void RaiseProperty(object sender, PropertyChangedEventArgs e)

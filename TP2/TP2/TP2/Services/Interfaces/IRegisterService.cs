@@ -3,5 +3,6 @@
     public interface IRegisterService
     {
         void RegisterUser(string email, string password);
+        bool CheckUser(string email);
     }
 }

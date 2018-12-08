@@ -15,6 +15,7 @@ namespace TP2.Services
         private ISecureStorageService _secureStorageService;
         private IPageDialogService _pageDialogService;
         private IFavoriteRegionListService _favoriteRegionListService;
+        private List<User> _userList;
 
         public RegisterService(IRepository<User> repository, ISecureStorageService secureStorageService, IPageDialogService pageDialogService, IFavoriteRegionListService favoriteRegionListService)
         {
@@ -28,32 +29,26 @@ namespace TP2.Services
         public async void RegisterUser(string email, string password)
         {
             string salt = _cryptoService.GenerateSalt();
-            List<User> userList = new List<User>();
-            userList = _repository.GetAll().ToList();
-
-            if (CheckUser(email, userList))
-            {
-                User newUser = new User()
-                {
-                    Login = email,
-                    HashedPassword = _cryptoService.HashSHA512(password, salt),
-                    PasswordSalt = salt,
-                };
-                _favoriteRegionListService.AddUserFavoriteList(newUser.Login);
-                _repository.Add(newUser);
-                await _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == email).Id.ToString(), _cryptoService.GenerateEncryptionKey());
-            }
-            else await _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.EMAIL_ALREADY_EXIST, UiText.OK);
+             User newUser = new User()
+             {
+                 Login = email,
+                 HashedPassword = _cryptoService.HashSHA512(password, salt),
+                 PasswordSalt = salt,
+             };
+             _favoriteRegionListService.AddUserFavoriteList(newUser.Login);
+             _repository.Add(newUser);
+             await _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == email).Id.ToString(), _cryptoService.GenerateEncryptionKey());
         }
 
-        public bool CheckUser(string email, List<User> list)
+        public bool CheckUser(string email)
         {
-            foreach (User user in list)
+            _userList = _repository.GetAll().ToList();
+            foreach (User user in _userList)
             {
-                if (user.Login == email) return false;
+                if (user.Login == email) return true;
             }
 
-            return true;
+            return false;
         }
     }
 }

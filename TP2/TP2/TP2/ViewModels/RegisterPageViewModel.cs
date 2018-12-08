@@ -19,6 +19,7 @@ namespace TP2.ViewModels
         private readonly ICryptoService _cryptoService;
         private readonly ISecureStorageService _secureStorageService;
         private readonly IRegisterService _registerService;
+        private readonly IAuthentificationService _authentificationService;
 
         private ValidatableObject<string> _email;
         private ValidatableObject<string> _password;
@@ -29,7 +30,7 @@ namespace TP2.ViewModels
         public DelegateCommand ExecuteValidatePassword => new DelegateCommand(ValidatePassword);
         public DelegateCommand ExecuteValidatePasswordConfirm => new DelegateCommand(ValidatePasswordConfirm);
 
-        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ICryptoService cryptoService, IRepository<User> repository, ISecureStorageService secureStorageService, IRegisterService registerService)
+        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ICryptoService cryptoService, IRepository<User> repository, ISecureStorageService secureStorageService, IRegisterService registerService, IAuthentificationService authentificationService)
             :base(navigationService)
         {
             _email = new ValidatableObject<string>();
@@ -44,6 +45,7 @@ namespace TP2.ViewModels
             _repository = repository;
             _secureStorageService = secureStorageService;
             _registerService = registerService;
+            _authentificationService = authentificationService;
         }
 
         public ValidatableObject<string> Email
@@ -121,10 +123,12 @@ namespace TP2.ViewModels
                 _password.Validate();
                 _passwordConfirm.Validate();
                 if (Password.Value != PasswordConfirm.Value) _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.PASSWORD_AND_CONFIRM_ARE_DIFFERENT, UiText.OK);
+                else if (_registerService.CheckUser(Email.Value)) _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.EMAIL_ALREADY_EXIST, UiText.OK);
                 else if (Email.IsValid && Password.IsValid && PasswordConfirm.IsValid)
                 {
                     _registerService.RegisterUser(Email.Value, Password.Value);
-                    _navigationService.GoBackToRootAsync();
+                    _authentificationService.LogIn(Email.Value, Password.Value);
+                    _navigationService.NavigateAsync("/NavigationPage/UserPage");
                 }
                 else _pageDialogService.DisplayAlertAsync(UiText.ALERT, UiText.ELEMENT_ARE_INVALIDE, UiText.OK);
                 
