@@ -51,7 +51,6 @@ namespace TP2
             containerRegistry.RegisterSingleton<IAuthentificationService, AuthentificationService>();
             containerRegistry.RegisterSingleton<IFavoriteRegionListService, FavoriteRegionListService>();
             containerRegistry.RegisterSingleton<ICryptoService, CryptoService>();
-            containerRegistry.RegisterSingleton<ISecureStorageService, SecureStorageService>();
             containerRegistry.RegisterSingleton<IRegisterService, RegisterService>();
 
             var databasePath = DependencyService.Get<IFileHelper>().GetLocalFilePath("MyDatabase.db3");
@@ -62,14 +61,12 @@ namespace TP2
             containerRegistry.RegisterSingleton<IRepository<User>, SqLiteRepository<User>>();
         }
 
-        private async void SeedTestData()
+        private void SeedTestData()
         {
             var userRepository = Container.Resolve<IRepository<User>>();
             var favoriteRegionListService = Container.Resolve<IFavoriteRegionListService>();
             CryptoService cryptoService = new CryptoService();
-            SecureStorageService secureStorageService = new SecureStorageService();
             var salt = cryptoService.GenerateSalt();
-            var key = cryptoService.GenerateEncryptionKey();
             var user1 = new User()
             {
                 Login = "123",
@@ -81,7 +78,6 @@ namespace TP2
                 return;
 
             userRepository.Add(user1);
-            await secureStorageService.SetEncryptionKeyAsync(userRepository.GetAll().FirstOrDefault(x => x.Login == "123").Id.ToString(), key);
         }
     }
 }

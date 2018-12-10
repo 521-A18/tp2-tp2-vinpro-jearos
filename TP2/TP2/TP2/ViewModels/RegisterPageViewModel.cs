@@ -15,9 +15,6 @@ namespace TP2.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
-        private readonly IRepository<User> _repository;
-        private readonly ICryptoService _cryptoService;
-        private readonly ISecureStorageService _secureStorageService;
         private readonly IRegisterService _registerService;
         private readonly IAuthentificationService _authentificationService;
 
@@ -30,7 +27,7 @@ namespace TP2.ViewModels
         public DelegateCommand ExecuteValidatePassword => new DelegateCommand(ValidatePassword);
         public DelegateCommand ExecuteValidatePasswordConfirm => new DelegateCommand(ValidatePasswordConfirm);
 
-        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ICryptoService cryptoService, IRepository<User> repository, ISecureStorageService secureStorageService, IRegisterService registerService, IAuthentificationService authentificationService)
+        public RegisterPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IRegisterService registerService, IAuthentificationService authentificationService)
             :base(navigationService)
         {
             _email = new ValidatableObject<string>();
@@ -41,9 +38,6 @@ namespace TP2.ViewModels
 
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
-            _cryptoService = cryptoService;
-            _repository = repository;
-            _secureStorageService = secureStorageService;
             _registerService = registerService;
             _authentificationService = authentificationService;
         }

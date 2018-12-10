@@ -12,21 +12,17 @@ namespace TP2.Services
     {
         private ICryptoService _cryptoService;
         private IRepository<User> _repository;
-        private ISecureStorageService _secureStorageService;
-        private IPageDialogService _pageDialogService;
         private IFavoriteRegionListService _favoriteRegionListService;
         private List<User> _userList;
 
-        public RegisterService(IRepository<User> repository, ISecureStorageService secureStorageService, IPageDialogService pageDialogService, IFavoriteRegionListService favoriteRegionListService)
+        public RegisterService(IRepository<User> repository, IFavoriteRegionListService favoriteRegionListService)
         {
             _cryptoService = new CryptoService();
             _repository = repository;
-            _secureStorageService = secureStorageService;
-            _pageDialogService = pageDialogService;
             _favoriteRegionListService = favoriteRegionListService;
         }
 
-        public async void RegisterUser(string email, string password)
+        public void RegisterUser(string email, string password)
         {
             string salt = _cryptoService.GenerateSalt();
              User newUser = new User()
@@ -37,7 +33,6 @@ namespace TP2.Services
              };
              _favoriteRegionListService.AddUserFavoriteList(newUser.Login);
              _repository.Add(newUser);
-             await _secureStorageService.SetEncryptionKeyAsync(_repository.GetAll().FirstOrDefault(x => x.Login == email).Id.ToString(), _cryptoService.GenerateEncryptionKey());
         }
 
         public bool CheckUser(string email)

@@ -21,9 +21,6 @@ namespace TP2.UnitTests.ViewModel
         private readonly RegisterPageViewModel _registerPageViewModels;
         private Mock<INavigationService> _mockNavigationService;
         private Mock<IPageDialogService> _mockPageDialogService;
-        private Mock<IRepository<User>> _mockRepository;
-        private ICryptoService _cryptoService;
-        private Mock<ISecureStorageService> _mockSecureStorageService;
         private Mock<IRegisterService> _mockRegisterService;
         private Mock<IAuthentificationService> _mockAuthentificationService;
 
@@ -33,13 +30,10 @@ namespace TP2.UnitTests.ViewModel
         {
             _mockNavigationService = new Mock<INavigationService>();
             _mockPageDialogService = new Mock<IPageDialogService>();
-            _cryptoService = new CryptoService();
-            _mockRepository = new Mock<IRepository<User>>();
-            _mockSecureStorageService = new Mock<ISecureStorageService>();
             _mockRegisterService = new Mock<IRegisterService>();
             _mockAuthentificationService = new Mock<IAuthentificationService>();
 
-            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object, _cryptoService, _mockRepository.Object, _mockSecureStorageService.Object, _mockRegisterService.Object, _mockAuthentificationService.Object);
+            _registerPageViewModels = new RegisterPageViewModel(_mockNavigationService.Object, _mockPageDialogService.Object, _mockRegisterService.Object, _mockAuthentificationService.Object);
         }
 
         [Fact]
